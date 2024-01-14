@@ -15,9 +15,15 @@
 <style scoped>
   .contenedor {
     height: 100%; 
-    width:1200px;
+    width:80%;
     display: flex;
     justify-content: center; /* Centrar horizontalmente */
     align-items: center; /* Centrar verticalmente si es necesario */
   }
+/* Media query para pantallas con ancho superior a 1400px */
+  @media (min-width: 1400px) {
+    .contenedor {
+      width: 70%;
+    } 
+  } 
 </style>

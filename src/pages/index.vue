@@ -1,47 +1,72 @@
 <template>  
-<v-container>
-  <v-container class="d-flex justify-center contenedor-buscador">
-      <v-row class="fill-height">
-        <v-col cols="7" class="borde d-flex align-center pt-0 pb-0">
-            <v-text-field
-              style="margin-top:10px;" 
-              clearable
-              label="Palabras a buscar en capacitaciones"
-              prepend-icon="mdi-magnify"
-              v-model="cTextoBuscar"
-              variant="outlined"              
-              @change="FiltrarCapacitaciones()"
-              @keydown.esc="LimpiarFiltrar()"
-              @click:clear="LimpiarFiltrar()"
-            />    
-        </v-col>
-        <v-col cols="3" class="borde d-flex align-center col justify-center">
-          <v-btn color="rgb(91,110,225)" style="text-transform:none;" @click="FiltrarCapacitaciones()">
-            Buscar Capacitaciones
-          </v-btn>
-        </v-col>
-        <v-col cols="2" class="borde d-flex align-center col justify-center">
-          <v-btn-toggle
-            v-model="cTipoBusqueda"
-            rounded="5"
-            color="grey lighten-8"
-            group
-          >
-            <v-btn value="Lista" style="text-transform:none;">
-              Lista
+<v-container>  
+  <!-- Contenedor para el buscador - Escritorio -->
+    <v-container class="d-none d-lg-flex justify-center contenedor-buscador">
+        <v-row class="fill-height">
+          <v-col cols="7" class="borde d-flex align-center pt-0 pb-0">
+              <v-text-field
+                style="margin-top:10px;" 
+                clearable
+                label="Palabras a buscar en capacitaciones"
+                prepend-icon="mdi-magnify"
+                v-model="cTextoBuscar"
+                variant="outlined"              
+                @change="FiltrarCapacitaciones()"
+                @keydown.esc="LimpiarFiltrar()"
+                @click:clear="LimpiarFiltrar()"
+              />    
+          </v-col>
+          <v-col cols="3" class="borde d-flex align-center col justify-center">
+            <v-btn color="rgb(91,110,225)" style="text-transform:none; font-size:12px;" @click="FiltrarCapacitaciones()">
+              Buscar Capacitaciones
             </v-btn>
+          </v-col>
+          <v-col cols="2" class="borde d-flex align-center col justify-center">
+            <v-btn-toggle
+              v-model="cTipoBusqueda"
+              rounded="5"
+              color="grey lighten-8"
+              group
+            >
+              <v-btn value="Lista" style="text-transform:none;">
+                Lista
+              </v-btn>
 
-            <v-btn value="Día" style="text-transform:none;">
-              Día
+              <v-btn value="Día" style="text-transform:none;">
+                Día
+              </v-btn>
+
+            </v-btn-toggle>      
+          </v-col>
+        </v-row>
+    </v-container>              
+  <!-- \Contenedor para el buscador - Escritorio -->  
+
+  <!-- Contenedor para el buscador - Móvil/Tableta (Visible en xs, sm y md) -->
+    <v-container class="d-flex flex-column d-lg-none justify-center contenedor-buscador-movil">
+        <v-row class="d-flex">
+          <v-text-field
+                style="margin-top:10px;" 
+                clearable
+                label="Palabras a buscar en capacitaciones"
+                prepend-icon="mdi-magnify"
+                v-model="cTextoBuscar"
+                variant="outlined"              
+                @change="FiltrarCapacitaciones()"
+                @keydown.esc="LimpiarFiltrar()"
+                @click:clear="LimpiarFiltrar()"
+              />    
+        </v-row>
+        <v-row class="justify-center">
+          <v-btn color="rgb(91,110,225)" style="text-transform:none; font-size:12px;" @click="FiltrarCapacitaciones()">
+              Buscar Capacitaciones
             </v-btn>
+        </v-row>
+    </v-container>
+  <!-- \Contenedor para el buscador - Móvil -->
 
-          </v-btn-toggle>      
-        </v-col>
-      </v-row>
-  </v-container>              
-
-  <!-- Contenedor para seleccionar Fecha -->
-  <v-container class="d-flex justify-center contenedor-buscador">
+  <!-- Contenedor para seleccionar Fecha - Escritorio -->
+  <v-container class="d-none d-lg-flex justify-center contenedor-buscador">
     <v-row>
       <v-col cols="2">
         <v-btn class="mt-4" style="margin-right:40px;" @click="ApuntarHoy()">
@@ -56,15 +81,33 @@
       </v-col>
     </v-row>
   </v-container>
-  <!-- \Contenedor para seleccionar Fecha -->
+  <!-- \Contenedor para seleccionar Fecha - Escritorio -->
+
+  <!-- Contenedor para fechas - Movil o tabletas (Visible en xs, sm y md) -->
+  <v-container class="d-flex flex-column d-lg-none justify-center contenedor-buscador">
+    <v-row class="justify-center">
+        <v-btn class="mt-10 mb-4" style="margin-right:40px;" @click="ApuntarHoy()">
+          Hoy
+        </v-btn>
+    </v-row>
+    <v-row class="justify-start mt-2 mb-2" >
+      <span>Desde: </span>
+      <input type="date" id="fechaInicial" name="fecha" v-model="cFechaInicial" style="width:120px;">
+    </v-row>  
+    <v-row class="justify-start mt-2">
+      <span >Hasta: </span>  
+      <input type="date" id="fechaFinal" name="fecha" v-model="cFechaFinal" style="width:120px;">
+    </v-row>
+  </v-container>
+  <!-- \Contenedor para fechas - Movil o tabletas -->
 
   <!-- Separador con indicador de fecha-->
-  <v-container class="mt-2 d-flex justify-center contenedor-buscador">
+  <v-container class="mt-4 d-flex justify-center contenedor-buscador">
         <v-row class="borde mt-0" >
-          <v-col cols="2" class="borde">
+          <v-col cols="2" xs="6" sm="6" class="borde">
             {{ cMes }} {{ cAño }}
           </v-col>
-          <v-col cols="10" class="borde d-flex align-center mt-0">
+          <v-col cols="10" xs="6" sm="6" class="borde d-flex align-center mt-0">
             <v-divider></v-divider>
           </v-col>
         </v-row>
@@ -90,26 +133,24 @@
         {{ obtenerNombreMesString(oItem.fecinicap) }} {{ cObtenerDiaDeFecha(oItem.fecinicap) }} @ {{ oItem.horinicap }} - {{ obtenerNombreMesString(oItem.fecfincap)}} {{ cObtenerDiaDeFecha(oItem.fecfincap) }} @ {{ oItem.horfincap }} 
       </v-card-subtitle>  
       <v-row >
-        <v-col cols="7">
-          <v-card-title class="card-title-wrap hover-underline" @click="CargarPost(oItem)">{{ oItem.titcap }}</v-card-title>
+        <!-- Columna para el contenido textual -->
+        <v-col cols="12" sm="7" md="7">
+          <v-card-title class="card-title-wrap hover-underline" @click="CargarPost(oItem)">
+            {{ oItem.titcap }}
+          </v-card-title>
           <v-card-text>
             {{ oItem.descorcap }}
           </v-card-text>
         </v-col>
-        <v-col cols="5">          
-          <!-- <v-img src="..\\assets\\images\\000001.jpg" style="width:80%; height:auto;"></v-img>  -->
-          <v-img :src="oItem.cImagen" style="width:80%; height:auto;"></v-img>
-          <!-- <v-img :src="require(`@/assets/images/${oItem.numcap}.jpg`)"></v-img> -->
-
+        <!-- Columna para la imagen -->
+        <v-col cols="12" sm="5" md="5">
+          <v-img :src="oItem.cImagen" style="width:100%; height:auto;"></v-img>
         </v-col>
       </v-row>
     </v-card>
   </div>
 </v-container>
-
-
 </v-container>
-<div v-html="cTextoHtml" v-if="false"></div>
 </template>
 
 <script>
@@ -133,7 +174,6 @@ import { useMessageStore } from '../stores/store.js'
       cfechaFinalOriginal: "",
       aCapacitaciones: [],
       aCapacitacionesFiltradas: [],
-      cTextoHtml: "",
       oItem:  { },
       oCapacitacion: null,
       cServidor: import.meta.env.VITE_API_URL,
@@ -309,7 +349,6 @@ import { useMessageStore } from '../stores/store.js'
     this.cAño   = this.cObtenerAñoFecha(dFecha);
     this.cFechaInicial  = this.cFormatoFecha(dFecha);
     this.cFechaFinal    = this.obtenerUltimoDiaDosMesesDespues(this.cFechaInicial);
-    this.cTextoHtml="<h1>hola</h1>";
     this.CargarCapacitaciones();
   },
 
@@ -336,7 +375,7 @@ import { useMessageStore } from '../stores/store.js'
 
 <style scoped>
   .contenedor-buscador {
-    width:820px;
+    width:60%;
     height:87px;    
   }
   .borde-contenedor {
