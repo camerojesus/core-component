@@ -26,4 +26,14 @@
       width: 70%;
     } 
   } 
+  /* Media query para pantallas de hasta 360px de ancho */
+  @media (max-width: 400px) {
+    .contenedor {
+      /* Aquí puedes ajustar los estilos para pantallas pequeñas */
+      width: 98%; /* Ejemplo: usar el ancho completo de la pantalla */
+      height:100%;
+      /* Otros estilos específicos para pantallas pequeñas */
+    }
+    /* Agrega aquí más estilos específicos para elementos en pantallas pequeñas */
+  }  
 </style>

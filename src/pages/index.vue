@@ -43,7 +43,7 @@
   <!-- \Contenedor para el buscador - Escritorio -->  
 
   <!-- Contenedor para el buscador - Móvil/Tableta (Visible en xs, sm y md) -->
-    <v-container class="d-flex flex-column d-lg-none justify-center contenedor-buscador-movil">
+    <v-container class="d-flex flex-column d-lg-none justify-center">
         <v-row class="d-flex">
           <v-text-field
                 style="margin-top:10px;" 
@@ -113,19 +113,13 @@
         </v-row>
   </v-container>
   <!-- \Separador con indicador de fecha-->
-  <v-btn @click="EditarCapacitacion()" v-if="false">
-     Editar capacitación
-  </v-btn>
   <v-container class="mt-2 d-flex justify-center flex-column">
   <div v-for="(oItem, index) in aCapacitacionesFiltradas" :key="index">
     <v-card class="pb-3 pt-3">
       <v-row class="pa-0">
-        <v-col cols="1" class="pa-2 d-flex flex-column justify-center align-center">
+        <v-col class="d-flex flex-column align-center" style="padding-right:10px;">
           <p>{{ cObtenerDiaSemanaAbreviado(oItem.fecinicap) }}</p>      
           <h3>{{ cObtenerDiaDeFecha(oItem.fecinicap) }}</h3>
-        </v-col>
-        <v-col cols="11" class="pa-2 ">
-          <!-- Contenido adicional si es necesario -->
         </v-col>
       </v-row>    
       
@@ -149,7 +143,7 @@
       </v-row>
     </v-card>
   </div>
-</v-container>
+  </v-container>
 </v-container>
 </template>
 
@@ -177,6 +171,8 @@ import { useMessageStore } from '../stores/store.js'
       oItem:  { },
       oCapacitacion: null,
       cServidor: import.meta.env.VITE_API_URL,
+      nWidth: 0,
+      nHeight: 0,
     };
   },
   computed: {
@@ -344,6 +340,8 @@ import { useMessageStore } from '../stores/store.js'
   },
 
   created() {    
+    this.nWidth = screen.width;
+    this.nHeight = screen.height;
     var dFecha = new Date();
     this.cMes   = this.cObtenerNombreMes(dFecha);
     this.cAño   = this.cObtenerAñoFecha(dFecha);
@@ -393,6 +391,20 @@ import { useMessageStore } from '../stores/store.js'
   .hover-underline:hover {
     text-decoration: underline;
     cursor: pointer;
+  }
+  @media (max-width: 400px) {
+    .contenedor-buscador {
+      width: 98%;    
+    }
+    .c1 {
+      padding-right: 10px;
+      width:30%;
+    }
+    .c2{
+      padding-right: 10px;
+      width:70%;
+    }
+
   }
 
 </style>
