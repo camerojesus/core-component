@@ -41,6 +41,12 @@
      <v-row>
          <!-- Mensaje -->
           <v-col>
+            <v-textarea
+              label="Comentarios"
+              placeholder="Escribe tus comentarios aquí..."
+              rows="3"
+              auto-grow
+            ></v-textarea>          
           </v-col>     
      </v-row>
   </v-container>
