@@ -15,11 +15,20 @@ const routes = [
     component: EditarCapacitacion
   },
   {
+    path: '/core-component',
+    name: 'core-component',
+    component: Home
+  },  
+  {
     path: '/detalle-capacitacion',
     name: 'detalle-capacitacion',
     component: DetalleCapacitacion
-  },  
-
+  },
+  // Ruta comodín para redirigir a Home si no se encuentra la ruta
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
+  }
 ];
 
 const router = createRouter({
