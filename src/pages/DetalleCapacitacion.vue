@@ -24,12 +24,20 @@
        <div v-html="oCapacitacion.concap" style="width:100%;">
        </div>
     </v-row>
+    <v-row class="mt-10 d-flex justify-end">
+       <contacto-cliente></contacto-cliente>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 import { useMessageStore } from '../stores/store.js'
+import ContactoCliente from '../components/ContactoCliente.vue'
+
 export default {
+  components: {
+    ContactoCliente
+  },
   name: "DetalleCapacitacion",
   created() {},
   data() {
@@ -40,7 +48,8 @@ export default {
     };
   },
   props: {},
-  methods: {},
+  methods: {
+  },
   mounted() {
     console.log("Cargué capacitacion");
     const storedState = localStorage.getItem('capacitacionState');    
@@ -61,6 +70,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
