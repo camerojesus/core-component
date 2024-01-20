@@ -17,16 +17,16 @@
     </div>    
     <!-- \Agregar información de la academia en forma de CHIP -->
     </v-row>    
-    <v-row class="mb-3">
-      <v-img :src="oCapacitacion.cImagen" style="width:80%; height:auto;"></v-img>
+    <v-row class="mb-3 filaImagen">
+      <v-img :src="oCapacitacion.cImagen" class="imagenCapacitacion" max-width="850" style="border-radius:8px 8px 8px 8px"></v-img>
     </v-row>    
     <v-row class="dflex flex-column justify-start pl-8">
        <div v-html="oCapacitacion.concap" style="width:100%;">
        </div>
     </v-row>
     <v-row class="mt-10 d-flex justify-end">
-       <contacto-cliente></contacto-cliente>
-    </v-row>
+       <contacto-cliente :numcapcon="oCapacitacion.numcap" ></contacto-cliente>
+    </v-row> 
   </v-container>
 </template>
 
@@ -44,14 +44,19 @@ export default {
     return {
       oCapacitacion: {"titcap":"","concap":"","fecini":"","fecfin":"","horini":"","horfin":"","cImagen":""},
       aListaCapacitaciones: [],
-      bTieneAcademias: false
+      bTieneAcademias: false,
     };
   },
   props: {},
   methods: {
+      bValidarDatos() {
+        if(this.nomcon=="" || this.apecon=="" || this.telcon=="" || this.emacon=="" || this.comcon=="" || this.paicon=="" || this.empcon=="") {
+          
+          return false;
+        }
+      }
   },
   mounted() {
-    console.log("Cargué capacitacion");
     const storedState = localStorage.getItem('capacitacionState');    
     if (storedState) {
         this.oCapacitacion = JSON.parse(storedState);
@@ -70,4 +75,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.filaImagen{
+  display:flex;
+  justify-content:center;
+  align-items:center;  
+}
+</style>

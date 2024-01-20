@@ -4,67 +4,101 @@
         <h2 style="color:rgb(56,58,117)">Contáctanos en línea</h2>
      </v-row>
      <v-row>
-        <!-- Nombre --> 
-        <v-col>
-          <v-text-field label="Nombre"></v-text-field>
+        <!-- Nombre -->         
+        <v-col md="6" class="columna" >
+          <v-text-field label="Nombre" v-model="nomcon"></v-text-field>
         </v-col>
         <!-- Apellido -->
-        <v-col>
-          <v-text-field label="Apellido"></v-text-field>
+        <v-col md="6" class="columna">
+          <v-text-field label="Apellido" v-model="apecon"></v-text-field>
         </v-col>
      </v-row>
      <v-row>
         <!-- Teléfono -->
-        <v-col>
-          <v-text-field label="Teléfono"></v-text-field>
+        <v-col md="6" class="columna">
+          <v-text-field label="Teléfono" v-model="telcon"></v-text-field>
         </v-col>
         <!-- Empresa -->
-        <v-col>
-          <v-text-field label="Empresa"></v-text-field>
+        <v-col md="6" class="columna" >
+          <v-text-field label="Empresa" v-model="empcon"></v-text-field>
         </v-col>
      </v-row>
      <v-row>
         <!-- País -->
-        <v-col>
+        <v-col md="6" class="columna">
           <v-select
             :items="paises"
             label="Selecciona un país"
-            return-object
+            v-model="paicon"
+            ref="ePais"            
           ></v-select>        
         </v-col>
         <!-- Correo Electrónico-->
-        <v-col>
+        <v-col md="6" class="columna">
           <v-text-field
             hide-details="auto"
             label="Correo Electrónico"
             placeholder="participante@gmail.com"
             type="email"
+            v-model="emacon"
           >
           </v-text-field>        
         </v-col>
      </v-row>
      <v-row>
          <!-- Mensaje -->
-          <v-col>
+          <v-col >
             <v-textarea
               label="Comentarios"
               placeholder="Escribe tus comentarios aquí..."
-              rows="3"
+              rows="4"
               auto-grow
+              v-model="comcon"
             ></v-textarea>          
           </v-col>     
      </v-row>
-     <v-row class="dflex justify-end mr-20px mb-2">
-        <v-btn color="rgb(230,174,52)">
+     <v-row class="dflex justify-end mr-20px mb-2 ">
+        <v-btn color="rgb(230,174,52)" class="mr-4" @click="EnviarContacto()">
           Enviar
         </v-btn>
      </v-row>
+    <!-- Notificaciones de errores al usuario --> 
+    <v-snackbar
+      v-model="bNotificacionError"
+      :timeout="2000"
+      color="deep-purple-accent-4"
+      elevation="24"
+      @input="bNotificacionError = false"
+    >
+      <span style="color:white">{{ cMensajeError }}</span>
+    </v-snackbar>     
+    <!-- \Notificaciones de errores al usuario --> 
+
+    <!-- Notificaciones al usuario --> 
+    <v-snackbar
+      v-model="bNotificacion"
+      :timeout="2000"
+      color="light-green"
+      elevation="24"
+      @input="bNotificacion = false"
+    >
+      <span style="color:black">{{ cMensaje }}</span>
+    </v-snackbar>     
+    <!-- \Notificaciones al usuario -->     
+
   </v-container>
 </template>
 
 <script>
+import axios from 'axios' // Importación de Axios  
+import { stringifyQuery } from 'vue-router';
+
 export default {
+  
   name: "Test",
+  props: {
+    numcapcon: String,    //  Número de capacitación
+  },
   created() {},
   data() {
     return {
@@ -76,281 +110,118 @@ export default {
       cCorreo: "",
       cMensaje: "",
       paises: [ 
-          "Afganistán",
-          "Albania",
-          "Alemania",
-          "Andorra",
-          "Angola",
-          "Anguilla",
-          "Antigua y Barbuda",
-          "Antártida",
-          "Arabia Saudita",
-          "Argelia",
-          "Argentina",
-          "Armenia",
-          "Aruba",
-          "Australia",
-          "Austria",
-          "Azerbaiyán",
-          "Bahamas",
-          "Bahréin",
-          "Bangladesh",
-          "Barbados",
-          "Belize",
-          "Benín",
-          "Bermudas",
-          "Bhután",
-          "Bielorrusia",
-          "Birmania",
-          "Bolivia",
-          "Bonaire, San Eustaquio y Saba",
-          "Bosnia-Herzegovina",
-          "Botsuana",
-          "Brasil",
-          "Brunei Darussalam",
-          "Bulgaria",
-          "Burkina Faso",
-          "Burundi",
-          "Bélgica",
-          "Cabo Verde",
-          "Camboya",
-          "Camerún",
-          "Canadá",
-          "Canary Islands",
-          "Chad",
           "Chile",
-          "China",
-          "Chipre",
           "Colombia",
-          "Comores",
-          "Congo",
-          "Corea del Norte",
-          "Corea del Sur",
-          "Costa Rica",
-          "Costa de Marfil",
-          "Croacia",
-          "Cuba",
-          "Curaçao",
-          "Dinamarca",
-          "Dominica",
-          "EE.UU. Islas Exteriores Menores",
-          "Ecuador",
-          "Egipto",
+          'Ecuador',
           "El Salvador",
-          "Emiratos Árabes Unidos",
-          "Eritrea",
-          "Eslovaquia",
-          "Eslovenia",
-          "España",
-          "Estado de Palestina",
-          "Estados Unidos",
-          "Estonia",
-          "Eswatini",
-          "Etiopía",
-          "Federación Rusa",
-          "Fiji",
-          "Filipinas",
-          "Finlandia",
-          "Francia",
-          "Gabón",
-          "Gambia",
-          "Georgia",
-          "Ghana",
-          "Gibraltar",
-          "Granada",
-          "Grecia",
-          "Groenlandia",
-          "Guadalupe",
-          "Guam",
-          "Guatemala",
-          "Guayana",
-          "Guayana Francesa",
-          "Guernsey",
-          "Guinea",
-          "Guinea Ecuatorial",
-          "Guinea-Bisáu",
-          "Haití",
-          "Holanda",
-          "Honduras",
-          "Hong Kong",
-          "Hungría",
-          "India",
-          "Indonesia",
-          "Irak",
-          "Irlanda",
-          "Irán",
-          "Isla Bouvet",
-          "Isla Norfolk",
-          "Isla de Man",
-          "Isla de Navidad",
-          "Islandia",
-          "Islas Caimán",
-          "Islas Cocos (Keeling)",
-          "Islas Cook",
-          "Islas Feroe",
-          "Islas Georgia del sur y Sandwich del sur",
-          "Islas Heard y McDonald",
-          "Islas Malvinas",
-          "Islas Marianas del Norte",
-          "Islas Marshall",
-          "Islas Pitcairn",
-          "Islas Salomón",
-          "Islas Turcas y Caicos",
-          "Islas Vírgenes (Británicas)",
-          "Islas Vírgenes (EE.UU.)",
-          "Islas Åland",
-          "Israel",
-          "Italia",
-          "Jamaica",
-          "Japón",
-          "Jersey",
-          "Jordania",
-          "Kazajstán",
-          "Kenia",
-          "Kirguistán",
-          "Kiribati",
-          "Kosovo",
-          "Kuwait",
-          "Laos",
-          "Lesotho",
-          "Letonia",
-          "Liberia",
-          "Libia",
-          "Liechtenstein",
-          "Lituania",
-          "Luxemburgo",
-          "Líbano",
-          "Macao",
-          "Macedonia del Norte",
-          "Madagascar",
-          "Malasia",
-          "Malawi",
-          "Maldivas",
-          "Mali",
-          "Malta",
-          "Marruecos",
-          "Martinica",
-          "Mauricio",
-          "Mauritania",
-          "Mayotte",
-          "Micronesia",
-          "Moldavia",
-          "Mongolia",
-          "Montenegro",
-          "Montserrat",
-          "Mozambique",
           "México",
-          "Mónaco",
-          "Namibia",
-          "Nauru",
-          "Nepal",
-          "Netherlands Antilles",
-          "Neutral Zone",
-          "Nicaragua",
-          "Nigeria",
-          "Niue",
-          "Noruega",
-          "Nueva Caledonia",
-          "Nueva Zelanda",
-          "Níger",
-          "Omán",
-          "Pakistán",
-          "Palau",
           "Panamá",
-          "Papúa Nueva Guinea",
-          "Paraguay",
           "Perú",
-          "Polinesia Francesa",
-          "Polonia",
-          "Portugal",
-          "Puerto Rico",
-          "Qatar",
-          "Reino Unido",
-          "República Centro Africana",
-          "República Checa",
-          "República Democrática del Congo",
-          "República Dominicana",
-          "Reunión",
-          "Ruanda",
-          "Rumania",
-          "Samoa",
-          "Samoa Americana",
-          "San Bartolomé",
-          "San Cristóbal y Nieves",
-          "San Marino",
-          "San Martín (parte holandesa)",
-          "San Martín (zona francesa)",
-          "San Pierre y Miquelon",
-          "San Vicente y las Granadinas",
-          "Santa Cruz de Tenerife",
-          "Santa Elena, Ascensión y Tristán de Acuña",
-          "Santa Lucía",
-          "Santa Sede (Ciudad Estado del Vaticano)",
-          "Santo Tomé y Príncipe",
-          "Senegal",
-          "Serbia",
-          "Seychelles",
-          "Sierra Leona",
-          "Singapur",
-          "Siria",
-          "Somalia",
-          "Somaliland",
-          "Sri Lanka",
-          "Sudáfrica",
-          "Sudán",
-          "Sudán del Sur",
-          "Suecia",
-          "Suiza",
-          "Surinam",
-          "Svalbard y Jan Mayen",
-          "Sáhara occidental",
-          "Tailandia",
-          "Taiwán",
-          "Tajikistán",
-          "Tanzania",
-          "Territorio británico del Océano Índico",
-          "Territorios franceses del sur",
-          "Timor Oriental",
-          "Timor oriental",
-          "Togo",
-          "Tokelau",
-          "Tonga",
-          "Trinidad y Tobago",
-          "Turkmekistán",
-          "Turquía",
-          "Tuvalu",
-          "Túnez",
-          "Ucrania",
-          "Uganda",
-          "Uruguay",
-          "Uzbekistán",
-          "Vanuatu",
           "Venezuela",
-          "Vietnam",
-          "Wallis y Futuna",
-          "Yemen",
-          "Yibuti",
-          "Zambia",
-          "Zimbabwe",
-]      
+      ],
+      emacon : "",                //  Email del contacto    
+      nomcon: "",                 //  Nombre del contacto
+      apecon: "",                 //  Apellido del contacto
+      telcon: "",                 //  Teléfono del contacto
+      comcon: "",                 //  Comentario del contacto
+      paicon: "",                 //  País del contacto         
+      empcon: "",                 //  Empresa del contacto      
+      fechorcon: new Date(),      //  Fecha y hora del contacto
+      cServidor: import.meta.env.VITE_API_URL,
+      cEmailRepetido: "",         //  Email repetido
+      cCapacitacionRepetida: "",  //  Capacitación repetida
+      bNotificacionError: false,  //  Notificación de error 
+      bNotificacion: false,       //  Notificación de éxito
+      cMensajeError: "",          //  Mensaje de error
+      cMensaje: "",               //  Mensaje de éxito
     };
   },
-  props: {},
-  methods: {},
+  methods: {
+   
+    bValidarDatos() {
+      if(this.nomcon=="" || this.apecon=="" || this.telcon=="" || this.emacon=="" || this.comcon=="" || this.paicon=="" || this.empcon=="") {
+        return false;
+      }
+      return true;
+    },
+    
+    async EnviarContacto() {
+      if(this.cEmailRepetido!="" && this.cCapacitacionRepetida!="") {
+        if(this.cEmailRepetido==this.emacon && this.cCapacitacionRepetida==this.numcapcon) {     
+          this.cMensajeError = "Estabas registrado previamente a ésta capacitación"
+          this.bNotificacionError = true;     
+          return;
+        }
+      }
+      if (!this.bValidarDatos())
+          {
+            this.cMensajeError="Debe completar el formulario"
+            this.bNotificacionError=true
+            return;
+          };       
+      try {
+          const objetoJSON = {
+              emacon: this.emacon,
+              numcapcon: this.numcapcon,
+              nomcon: this.nomcon,
+              apecon: this.apecon,
+              telcon: this.telcon,
+              empcon: this.empcon,
+              paicon: this.paicon,
+              comcon: this.comcon,
+              fechorcon: this.fechorcon.toISOString(), // Convertimos el objeto Date a un string ISO
+          };
+          const url = this.cServidor + '/agregarcontactocliente/';
+          const response = await axios.put(url, objetoJSON);
+          console.log('Respuesta del servidor:', response.data);
+          // Proceso exitoso - Notifico al usuario
+          this.cMensaje               =  "Su mensaje ha sido enviado con éxito. ¡Gracias por contactarnos!"; // Personaliza este mensaje según sea necesario
+          this.bNotificacion          =   true; // Muestra la notificación de éxito
+          this.cEmailRepetido         =   this.emacon
+          this.cCapacitacionRepetida  =   this.numcapcon
+          this.bNotificacionError     =   false;
+
+      } catch (error) {
+          if (error.response && error.response.status === 400) {
+              // Manejar el caso específico de registro existente
+              this.bNotificacionError  =   true;
+              this.cEmailRepetido         =   this.emacon
+              this.cCapacitacionRepetida  =   this.numcapcon
+              this.cMensajeError          =   "Estabas registrado previamente a ésta capacitación"      
+              // Puedes mostrar un mensaje al usuario aquí, si es necesario
+          } else {
+              // Manejar otros tipos de errores
+              console.error('Error al enviar datos:', error);
+          }
+      }
+    }
+ 
+
+  },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .v-container {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  width:98%
+  width:98%;
+  border-radius:8px;
 }
+
 @media (min-width: 1201px) {
-  /* Tus estilos aquí */
+  /* Estilos para pantallas de más de 1201px */
   .v-container {
     width:70%;
   }
 }
 
+@media (max-width: 700px) {
+  /* Estilos para pantallas de menos de 400px */
+  .columna {
+    /* Por ejemplo, podrías hacer que las columnas ocupen el 100% del ancho */
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
 
 </style>

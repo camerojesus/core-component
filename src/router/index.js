@@ -10,7 +10,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/editar-capacitacion',
+    path: '/core-component/editar-capacitacion',
     name: 'editar-capacitacion',
     component: EditarCapacitacion
   },
@@ -20,7 +20,7 @@ const routes = [
     component: Home
   },  
   {
-    path: '/detalle-capacitacion',
+    path: '/core-component/detalle-capacitacion',
     name: 'detalle-capacitacion',
     component: DetalleCapacitacion
   },
