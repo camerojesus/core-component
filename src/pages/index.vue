@@ -1,5 +1,5 @@
 <template>
-  <v-container id="Contenedor">
+  <v-container>
     <!-- Contenedor para el buscador - Escritorio -->
     <v-container class="d-none d-lg-flex justify-center contenedor-buscador">
       <v-row class="fill-height">
@@ -22,7 +22,6 @@
             <v-btn value="Día" style="text-transform:none;">
               Día
             </v-btn>
-
           </v-btn-toggle>
         </v-col>
       </v-row>
@@ -156,6 +155,7 @@ export default {
       cServidor: import.meta.env.VITE_API_URL,
       nWidth: 0,
       nHeight: 0,
+      cPaginaPresentar: "Capacitaciones"
     };
   },
   computed: {

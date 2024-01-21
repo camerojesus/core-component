@@ -1,5 +1,5 @@
 <template>
-  <v-container class="v-container">
+  <v-container class="v-container mt-10">
      <v-row class="d-flex justify-center">
         <h2 style="color:rgb(56,58,117)">Contáctanos en línea</h2>
      </v-row>
@@ -84,8 +84,7 @@
     >
       <span style="color:black">{{ cMensaje }}</span>
     </v-snackbar>     
-    <!-- \Notificaciones al usuario -->     
-
+    <!-- \Notificaciones al usuario -->             
   </v-container>
 </template>
 
@@ -119,24 +118,29 @@ export default {
           "Perú",
           "Venezuela",
       ],
-      emacon : "",                //  Email del contacto    
-      nomcon: "",                 //  Nombre del contacto
-      apecon: "",                 //  Apellido del contacto
-      telcon: "",                 //  Teléfono del contacto
-      comcon: "",                 //  Comentario del contacto
-      paicon: "",                 //  País del contacto         
-      empcon: "",                 //  Empresa del contacto      
-      fechorcon: new Date(),      //  Fecha y hora del contacto
+      emacon : "",                    //  Email del contacto    
+      nomcon: "",                     //  Nombre del contacto
+      apecon: "",                     //  Apellido del contacto
+      telcon: "",                     //  Teléfono del contacto
+      comcon: "",                     //  Comentario del contacto
+      paicon: "",                     //  País del contacto         
+      empcon: "",                     //  Empresa del contacto      
+      fechorcon: new Date(),          //  Fecha y hora del contacto
       cServidor: import.meta.env.VITE_API_URL,
-      cEmailRepetido: "",         //  Email repetido
-      cCapacitacionRepetida: "",  //  Capacitación repetida
-      bNotificacionError: false,  //  Notificación de error 
-      bNotificacion: false,       //  Notificación de éxito
-      cMensajeError: "",          //  Mensaje de error
-      cMensaje: "",               //  Mensaje de éxito
+      cEmailRepetido: "",             //  Email repetido
+      cCapacitacionRepetida: "",      //  Capacitación repetida
+      bNotificacionError: false,      //  Notificación de error 
+      bNotificacion: false,           //  Notificación de éxito
+      cMensajeError: "",              //  Mensaje de error
+      cMensaje: "",                   //  Mensaje de éxito
+      bMostrarListaContactos: false,  //  Mostrar lista de contactos
     };
   },
   methods: {
+
+    VerContactos() {
+      this.bMostrarListaContactos = true;
+    },
    
     bValidarDatos() {
       if(this.nomcon=="" || this.apecon=="" || this.telcon=="" || this.emacon=="" || this.comcon=="" || this.paicon=="" || this.empcon=="") {

@@ -24,21 +24,20 @@
        <div v-html="oCapacitacion.concap" style="width:100%;">
        </div>
     </v-row>
-    <v-row class="mt-10 d-flex justify-end">
-       <contacto-cliente :numcapcon="oCapacitacion.numcap" ></contacto-cliente>
-    </v-row> 
+    <contacto-cliente :numcapcon="oCapacitacion.numcap" class="mt-4">
+    </contacto-cliente>
   </v-container>
 </template>
 
 <script>
 import { useMessageStore } from '../stores/store.js'
-import ContactoCliente from '../components/ContactoCliente.vue'
+import ContactoCliente from "../components/ContactoCliente.vue";
 
 export default {
-  components: {
-    ContactoCliente
-  },
   name: "DetalleCapacitacion",
+  components: {
+    ContactoCliente: "contacto-cliente"
+  },
   created() {},
   data() {
     return {
