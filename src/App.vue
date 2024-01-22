@@ -95,7 +95,7 @@ export default {
   display: flex;
   justify-content: center;
   /* Centrar horizontalmente */
-  align-items: center;
+  /*align-items: center;
   /* Centrar verticalmente si es necesario */
 }
 
