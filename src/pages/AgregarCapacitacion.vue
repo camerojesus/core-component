@@ -102,7 +102,7 @@ export default {
       }
     },
   },
-  // Aquí puedes agregar más métodos, propiedades computadas, watchers, etc.
+  // Métodos adicionales - cuando se necesiten
 };
 </script>
 
