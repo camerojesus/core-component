@@ -30,6 +30,7 @@ export default {
     return {
       // Datos reactivos
       cPaginaPresentar: "Capacitaciones",
+      date: new Date().toISOString().substr(0, 10),
     };
   },
 
