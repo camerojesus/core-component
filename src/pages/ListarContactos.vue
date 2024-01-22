@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex flex-column justify-center align-center">
     <v-row>
-      <h3>Listado de Contactos</h3>
+      <h3 style="color:rgb(21,92,190)">Listado de Contactos</h3>
     </v-row>
     <v-row>
       <!-- Contenedor para seleccionar Fecha - Escritorio -->

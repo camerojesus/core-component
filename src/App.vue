@@ -73,6 +73,7 @@ export default {
   // Ciclos de vida del componente
   mounted() {
     // Código para cuando el componente se monta
+    this.$router.push({ name: 'home' });
   },
 
   // Directivas personalizadas (opcional)
@@ -90,7 +91,6 @@ export default {
 
 <style scoped>
 .contenedor {
-  height: 100%;
   width: 80%;
   display: flex;
   justify-content: center;
