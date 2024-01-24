@@ -1,23 +1,59 @@
-<template>
-  <v-data-table :headers="headers" :items="capacitaciones" class="elevation-8" elevation="4">
+<template class="d-flex flex-column">
+  <QuillEditor theme="snow" style="width:800px;height:400px;"/>
+  <v-data-table
+    :headers="headers"
+    :items="capacitaciones"
+    class="elevation-8"
+    elevation="4"
+  >
     <template v-slot:item.action="{ item }">
-  <v-layout align-center justify-start>
-    <v-btn icon small x-small color="primary" @click="editarCapacitacion(item)">
-      <v-icon small>mdi-pencil</v-icon>
-    </v-btn>
-    <v-btn icon small x-small color="red" @click="eliminarCapacitacion(item)">
-      <v-icon small>mdi-delete</v-icon>
-    </v-btn>
-  </v-layout>
-</template>
+      <v-layout align-center justify-start>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ attrs, on }">
+            <v-btn
+              icon
+              small
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
+              @click="editarCapacitacion(item)"
+            >
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+          </template>
+          <span>Editar Capacitaciones</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ attrs, on }">
+            <v-btn
+              icon
+              small
+              color="red"
+              v-bind="attrs"
+              v-on="on"
+              @click="eliminarCapacitacion(item)"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </template>
+          <span>Eliminar Capacitaciones</span>
+        </v-tooltip>
+      </v-layout>
+    </template>
   </v-data-table>
 </template>
 
 <script>
 import axios from "axios";
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 export default {
   name: "Capacitaciones",
+  components:{
+    QuillEditor
+  },  
   data() {
     return {
       headers: [
@@ -47,7 +83,11 @@ export default {
     },
     editarCapacitacion(item) {
       // Implementar lógica para editar capacitación
-      console.log("Editar:", item);
+      console.clear();
+      console.log("Editando ESTA capacitacion", item);
+      localStorage.setItem("capacitacionSeleccionada", JSON.stringify(item));
+      // push del router para ejecutar el page agregar-capacitacion
+      this.$router.push({ name: "agregar-capacitacion" });
     },
     eliminarCapacitacion(item) {
       // Implementar lógica para eliminar capacitación

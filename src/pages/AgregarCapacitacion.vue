@@ -206,7 +206,7 @@ export default {
     },
 
     bValidarCampos() {
-      console.log("Validando campos");
+
       if (this.fecinicap == "") {
         this.cMensajeError = "Debes seleccionar una fecha inicial";
         this.bNotificacionError = true;
@@ -245,7 +245,7 @@ export default {
       if (this.imacap == "") {
         this.cMensajeError = "Debes seleccionar una imagen destacada";
         this.bNotificacionError = true;
-        console.log("entré en la condición ampliada");
+
         return false;
       }
       return true;
@@ -253,7 +253,6 @@ export default {
 
     async GuardarCapacitacion() {
       if (!this.bValidarCampos()) {
-        console.log("Campos inválidos");
         return;
       }
 
@@ -335,7 +334,21 @@ export default {
   mounted() {
     this.bNotificacion = false;
     this.bNotificacionError = false;
-    this.llenarValoresDePrueba();
+    const itemJson = localStorage.getItem("capacitacionSeleccionada");
+    if (itemJson) {
+      const item = JSON.parse(itemJson);
+      // Ahora puedes usar el objeto 'item' como necesites
+      this.numcap = item.numcap;
+      this.fecinicap = item.fecinicap;
+      this.fecfincap = item.fecfincap;
+      this.horinicap = item.horinicap;
+      this.horfincap = item.horfincap;
+      this.titcap = item.titcap;
+      this.descorcap = item.descorcap;
+      this.concap = item.concap;
+      this.imacap = item.imacap;      
+      localStorage.removeItem('capacitacionSeleccionada');
+    }    
   },
 };
 </script>
