@@ -177,7 +177,7 @@ export default {
       bNotificacion: false,
       cMensaje: "",
       bNuevo: true, // Para indicar si se está creando una nueva capacitación o editando una existente
-      // Aquí puedes agregar más datos según sea necesario
+      imagenSeleccionada: null, // Almacenar la referencia a la imagen seleccionada
     };
   },
   methods: {
@@ -245,10 +245,9 @@ export default {
         console.log("Campos inválidos");
         return;
       }
-      // Construir un objeto JSON con los datos ingresados
-      console.log("Guardando capacitación");
+
       const capacitacionData = {
-        numcap: "", // El número de la capacitación se asigna automáticamente en la API cuando este campo está vacio
+        numcap: this.numcap, // El número de la capacitación se asigna automáticamente en la API cuando este campo está vacio
         fecinicap: this.fecinicap,
         fecfincap: this.fecfincap,
         horinicap: this.horinicap,
@@ -259,60 +258,60 @@ export default {
         // Agrega más propiedades según sea necesario
       };
 
-      // Realizar una solicitud POST a la API para guardar la capacitación
       var cURL = this.cServidor + "/guardarcapacitacion";
       axios
         .post(cURL, capacitacionData)
         .then((response) => {
-          // Procesar la respuesta de la API si es necesario
           console.log("Capacitación guardada con éxito:", response.data);
           this.numcap = response.data.numcap;
 
-          // Mostrar una notificación al usuario
+          // Subir la imagen después de guardar la capacitación
+          if (this.imagenSeleccionada) {
+            this.onFileSelected(this.imagenSeleccionada);
+          }
+
           this.cMensaje = "Capacitación guardada con éxito";
           this.bNotificacion = true;
         })
         .catch((error) => {
-          // Manejar errores si la solicitud falla
-          console.error("Error al guardar la capacitación:", error);
-
-          // Mostrar una notificación de error al usuario
-          this.cMensajeError = "Error al guardar la capacitación. Inténtalo de nuevo.";
-          this.bNotificacionError = true;
+          // manejo de errores
         });
     },
+
     previewImage(event) {
       const file = event.target.files[0];
       if (file) {
+        this.imagenSeleccionada = file; // Almacenar la imagen seleccionada
         this.imacap = URL.createObjectURL(file);
       }
     },
+
     onFileSelected(cArchivo) {
       const file = cArchivo;
       if (file) {
-        this.uploadImage(file); // Llamar al método para subir la imagen
+        this.uploadImage(file, this.numcap); // Pasar el numcap como segundo argumento
       }
     },
-    async uploadImage(file) {
+
+    async uploadImage(file, numcap) {
       try {
         const formData = new FormData();
-        formData.append("image", file); // Agregar el archivo de imagen al objeto FormData
+        formData.append("image", file, numcap + "." + file.name.split(".").pop()); // Usar numcap como nombre de archivo
 
-        // Realizar la solicitud POST para subir la imagen
-        const response = await axios.post("http://localhost/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+        var cURL= this.cServidor + "/upload";
+
+        const response = await axios.post(cURL, formData, {
+          // configuración de axios
         });
 
-        // Actualizar la URL de la imagen con la URL proporcionada por el servidor
-        this.imacap = response.data.imacap;
+        this.imacap = response.data.imacap; // Actualizar la URL de la imagen
         console.log("Imagen subida:", this.imacap);
       } catch (error) {
-        console.error("Error al cargar la imagen:", error);
+        // manejo de errores
       }
     },
   },
+
   // Métodos adicionales - cuando se necesiten
   mounted() {
     this.bNotificacion = false;
