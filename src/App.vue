@@ -1,16 +1,22 @@
 <template>
   <v-app>
     <v-main>
-      <v-container style="width:70%;" class="d-flex flex-column justify-start mt-4">
-        <v-btn-toggle v-model="cPaginaPresentar" rounded="5" color="grey lighten-8" group @click="MostrarPagina()">
-          <v-btn value="Capacitaciones" style="text-transform:none;">
+      <v-container style="width: 70%" class="d-flex flex-column justify-start mt-4">
+        <v-btn-toggle
+          v-model="cPaginaPresentar"
+          rounded="5"
+          color="grey lighten-8"
+          group
+          @click="MostrarPagina()"
+        >
+          <v-btn value="Capacitaciones" style="text-transform: none">
             Capacitaciones
           </v-btn>
-          <v-btn value="ListarContactos" style="text-transform:none;">
+          <v-btn value="ListarContactos" style="text-transform: none">
             Listar contactos
           </v-btn>
-          <v-btn value="AgregarCapacitaciones" style="text-transform:none;">
-            Agregar Capacitaciones
+          <v-btn value="AgregarCapacitaciones" style="text-transform: none">
+            Gestionar Capacitaciones
           </v-btn>
         </v-btn-toggle>
       </v-container>
@@ -23,7 +29,7 @@
 
 <script>
 export default {
-  name: 'Principal', // Nombre del componente
+  name: "Principal", // Nombre del componente
 
   // Datos del componente
   data() {
@@ -45,13 +51,13 @@ export default {
     MostrarPagina() {
       switch (this.cPaginaPresentar) {
         case "Capacitaciones":
-          this.$router.push({ name: 'home' });
+          this.$router.push({ name: "home" });
           break;
         case "ListarContactos":
-          this.$router.push({ name: 'listar-contactos' });
+          this.$router.push({ name: "listar-contactos" });
           break;
         case "AgregarCapacitaciones":
-          this.$router.push({ name: 'agregar-capacitacion' }); // Asume que existe una ruta con este nombre
+          this.$router.push({ name: "agregar-capacitacion" }); // Asume que existe una ruta con este nombre
           break;
         default:
           // Opcional: Manejar un caso por defecto si ninguna opción coincide
@@ -74,7 +80,7 @@ export default {
   // Ciclos de vida del componente
   mounted() {
     // Código para cuando el componente se monta
-    this.$router.push({ name: 'home' });
+    this.$router.push({ name: "home" });
   },
 
   // Directivas personalizadas (opcional)
@@ -85,10 +91,9 @@ export default {
   // Componentes hijos (opcional)
   components: {
     // Definición de componentes hijos
-  }
-}
+  },
+};
 </script>
-
 
 <style scoped>
 .contenedor {
