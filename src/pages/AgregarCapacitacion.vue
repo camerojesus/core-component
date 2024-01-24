@@ -1,5 +1,16 @@
 <template>
-  <v-container class="mt-2 d-flex justify-center">
+  <v-container class="mt-2 d-flex justify-center flex-column">
+    <v-row class="mb-4" max-width="800">
+      <v-btn
+        style="margin-left: 10px; text-transform: none"
+        color="rgb(91,110,225)"
+        @click="CargarListaCapacitaciones"
+        elevation="4"
+      >
+        Listar capacitaciones / Modificar / Eliminar
+      </v-btn>
+    </v-row>
+
     <v-card class="pa-5" max-width="800" elevation="6">
       <!-- Título de CARD -->
       <v-card-title
@@ -295,6 +306,10 @@ export default {
       }
     },
 
+    CargarListaCapacitaciones() {
+      this.$router.push({ name: "listar-capacitaciones" });
+    },
+
     async uploadImage(file) {
       try {
         const formData = new FormData();
@@ -328,5 +343,8 @@ export default {
 <style scoped>
 .fontComprimida {
   font-size: 14px;
+}
+.borde {
+  border: 1px solid black;
 }
 </style>

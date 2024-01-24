@@ -4,6 +4,7 @@ import EditarCapacitacion from '@/pages/EditarCapacitacion.vue';
 import DetalleCapacitacion from '@/pages/DetalleCapacitacion.vue';
 import ListarContactos from '@/pages/ListarContactos.vue';
 import AgregarCapacitacion from '@/pages/AgregarCapacitacion.vue';
+import ListarCapacitaciones from '@/pages/ListadoCapacitaciones.vue';
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     name: 'agregar-capacitacion',
     component: AgregarCapacitacion
   },    
+  {
+    path: '/core-component/listar-capacitaciones',
+    name: 'listar-capacitaciones',
+    component: ListarCapacitaciones
+  },      
   {
     path: '/core-component/detalle-capacitacion',
     name: 'detalle-capacitacion',

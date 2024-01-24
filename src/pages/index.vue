@@ -4,24 +4,32 @@
     <v-container class="d-none d-lg-flex justify-center contenedor-buscador">
       <v-row class="fill-height">
         <v-col cols="7" class="borde d-flex align-center pt-0 pb-0">
-          <v-text-field style="margin-top:10px;" clearable label="Palabras a buscar en capacitaciones"
-            prepend-icon="mdi-magnify" v-model="cTextoBuscar" variant="outlined" @change="FiltrarCapacitaciones()"
-            @keydown.esc="LimpiarFiltrar()" @click:clear="LimpiarFiltrar()" />
+          <v-text-field
+            style="margin-top: 10px"
+            clearable
+            label="Palabras a buscar en capacitaciones"
+            prepend-icon="mdi-magnify"
+            v-model="cTextoBuscar"
+            variant="outlined"
+            @change="FiltrarCapacitaciones()"
+            @keydown.esc="LimpiarFiltrar()"
+            @click:clear="LimpiarFiltrar()"
+          />
         </v-col>
         <v-col cols="3" class="borde d-flex align-center col justify-center">
-          <v-btn color="rgb(91,110,225)" style="text-transform:none; font-size:12px;" @click="FiltrarCapacitaciones()">
+          <v-btn
+            color="rgb(91,110,225)"
+            style="text-transform: none; font-size: 12px"
+            @click="FiltrarCapacitaciones()"
+          >
             Buscar Capacitaciones
           </v-btn>
         </v-col>
         <v-col cols="2" class="borde d-flex align-center col justify-center">
           <v-btn-toggle v-model="cTipoBusqueda" rounded="5" color="grey lighten-8" group>
-            <v-btn value="Lista" style="text-transform:none;">
-              Lista
-            </v-btn>
+            <v-btn value="Lista" style="text-transform: none"> Lista </v-btn>
 
-            <v-btn value="Día" style="text-transform:none;">
-              Día
-            </v-btn>
+            <v-btn value="Día" style="text-transform: none"> Día </v-btn>
           </v-btn-toggle>
         </v-col>
       </v-row>
@@ -31,9 +39,17 @@
     <!-- Contenedor para el buscador - Móvil/Tableta (Visible en xs, sm y md) -->
     <v-container class="d-flex flex-column d-lg-none justify-center my-6">
       <v-row class="d-flex">
-        <v-text-field style="margin-top:10px;" clearable label="Palabras a buscar en capacitaciones"
-          prepend-icon="mdi-magnify" v-model="cTextoBuscar" variant="outlined" @change="FiltrarCapacitaciones()"
-          @keydown.esc="LimpiarFiltrar()" @click:clear="LimpiarFiltrar()" />
+        <v-text-field
+          style="margin-top: 10px"
+          clearable
+          label="Palabras a buscar en capacitaciones"
+          prepend-icon="mdi-magnify"
+          v-model="cTextoBuscar"
+          variant="outlined"
+          @change="FiltrarCapacitaciones()"
+          @keydown.esc="LimpiarFiltrar()"
+          @click:clear="LimpiarFiltrar()"
+        />
       </v-row>
     </v-container>
     <!-- \Contenedor para el buscador - Móvil -->
@@ -42,38 +58,66 @@
     <v-container class="d-none d-lg-flex justify-center contenedor-buscador">
       <v-row>
         <v-col cols="2">
-          <v-btn class="mt-4" style="margin-right:40px;" @click="ApuntarHoy()">
+          <v-btn class="mt-4" style="margin-right: 40px" @click="ApuntarHoy()">
             Hoy
           </v-btn>
         </v-col>
         <v-col cols="10" class="borde d-flex align-center">
-          <span style="margin-right:10px;">Desde: </span>
-          <input type="date" id="fechaInicial" name="fecha" v-model="cFechaInicial" style="width:120px;">
-          <span style="margin-right:10px;  margin-left:20px;">Hasta: </span>
-          <input type="date" id="fechaFinal" name="fecha" v-model="cFechaFinal" style="width:120px;">
+          <span style="margin-right: 10px">Desde: </span>
+          <input
+            type="date"
+            id="fechaInicial"
+            name="fecha"
+            v-model="cFechaInicial"
+            style="width: 120px"
+          />
+          <span style="margin-right: 10px; margin-left: 20px">Hasta: </span>
+          <input
+            type="date"
+            id="fechaFinal"
+            name="fecha"
+            v-model="cFechaFinal"
+            style="width: 120px"
+          />
         </v-col>
       </v-row>
     </v-container>
     <!-- \Contenedor para seleccionar Fecha - Escritorio -->
 
     <!-- Contenedor para fechas - Movil o tabletas (Visible en xs, sm y md) -->
-    <v-container class="d-flex flex-column d-lg-none justify-center contenedor-buscador mb-8">
+    <v-container
+      class="d-flex flex-column d-lg-none justify-center contenedor-buscador mb-8"
+    >
       <v-row class="justify-center fill-height my-2">
         <!-- my-10 es un ejemplo, ajusta el valor según tus necesidades -->
-        <v-btn @click="ApuntarHoy()">
-          Hoy
-        </v-btn>
+        <v-btn @click="ApuntarHoy()"> Hoy </v-btn>
       </v-row>
       <v-row class="justify-start my-2">
         <span>Desde: </span>
-        <input type="date" id="fechaInicial" name="fecha" v-model="cFechaInicial" style="width:120px;">
+        <input
+          type="date"
+          id="fechaInicial"
+          name="fecha"
+          v-model="cFechaInicial"
+          style="width: 120px"
+        />
       </v-row>
       <v-row class="justify-start my-2">
         <span>Hasta: </span>
-        <input type="date" id="fechaFinal" name="fecha" v-model="cFechaFinal" style="width:120px;">
+        <input
+          type="date"
+          id="fechaFinal"
+          name="fecha"
+          v-model="cFechaFinal"
+          style="width: 120px"
+        />
       </v-row>
       <v-row class="justify-center my-2">
-        <v-btn color="rgb(91,110,225)" style="text-transform:none; font-size:12px;" @click="FiltrarCapacitaciones()">
+        <v-btn
+          color="rgb(91,110,225)"
+          style="text-transform: none; font-size: 12px"
+          @click="FiltrarCapacitaciones()"
+        >
           Buscar Capacitaciones
         </v-btn>
       </v-row>
@@ -83,9 +127,7 @@
     <!-- Separador con indicador de fecha-->
     <v-container class="mt-4 d-flex justify-center contenedor-buscador" my-2>
       <v-row class="borde mt-0">
-        <v-col cols="2" xs="6" sm="6" class="borde">
-          {{ cMes }} {{ cAño }}
-        </v-col>
+        <v-col cols="2" xs="6" sm="6" class="borde"> {{ cMes }} {{ cAño }} </v-col>
         <v-col cols="10" xs="6" sm="6" class="borde d-flex align-center mt-0">
           <v-divider></v-divider>
         </v-col>
@@ -95,7 +137,6 @@
     <v-container class="mt-2 d-flex justify-center flex-column">
       <div v-for="(oItem, index) in aCapacitacionesFiltradas" :key="index">
         <v-card class="pb-3 pt-3">
-
           <v-row class="pa-0">
             <v-col class="d-flex flex-column custom-align-left">
               <p>{{ cObtenerDiaSemanaAbreviado(oItem.fecinicap) }}</p>
@@ -104,14 +145,18 @@
           </v-row>
 
           <v-card-subtitle class="pt-2">
-            {{ obtenerNombreMesString(oItem.fecinicap) }} {{ cObtenerDiaDeFecha(oItem.fecinicap) }} @ {{ oItem.horinicap
-            }} - {{ obtenerNombreMesString(oItem.fecfincap) }} {{ cObtenerDiaDeFecha(oItem.fecfincap) }} @ {{
-  oItem.horfincap }}
+            {{ obtenerNombreMesString(oItem.fecinicap) }}
+            {{ cObtenerDiaDeFecha(oItem.fecinicap) }} @ {{ oItem.horinicap }} -
+            {{ obtenerNombreMesString(oItem.fecfincap) }}
+            {{ cObtenerDiaDeFecha(oItem.fecfincap) }} @ {{ oItem.horfincap }}
           </v-card-subtitle>
           <v-row>
             <!-- Columna para el contenido textual -->
             <v-col cols="12" sm="7" md="7">
-              <v-card-title class="card-title-wrap hover-underline" @click="CargarPost(oItem)">
+              <v-card-title
+                class="card-title-wrap hover-underline"
+                @click="CargarPost(oItem)"
+              >
                 {{ oItem.titcap }}
               </v-card-title>
               <v-card-text>
@@ -120,7 +165,7 @@
             </v-col>
             <!-- Columna para la imagen -->
             <v-col cols="12" sm="5" md="5">
-              <v-img :src="oItem.cImagen" style="width:100%; height:auto;"></v-img>
+              <v-img :src="oItem.cImagen" style="width: 100%; height: auto"></v-img>
             </v-col>
           </v-row>
         </v-card>
@@ -130,13 +175,12 @@
 </template>
 
 <script>
-import { stringifyQuery } from 'vue-router';
-import axios from 'axios';
-import { useMessageStore } from '../stores/store.js'
-
+import { stringifyQuery } from "vue-router";
+import axios from "axios";
+import { useMessageStore } from "../stores/store.js";
 
 export default {
-  name: 'componenteEventos',
+  name: "componenteEventos",
   data() {
     return {
       // tus datos aquí
@@ -155,25 +199,35 @@ export default {
       cServidor: import.meta.env.VITE_API_URL,
       nWidth: 0,
       nHeight: 0,
-      cPaginaPresentar: "Capacitaciones"
+      cPaginaPresentar: "Capacitaciones",
     };
   },
   computed: {
     // Acceder a los estados y getters de la tienda
     messages() {
-      const messageStore = useMessageStore()
-      return messageStore.messages
+      const messageStore = useMessageStore();
+      return messageStore.messages;
     },
     unreadMessages() {
-      const messageStore = useMessageStore()
-      return messageStore.unreadMessages
-    }
+      const messageStore = useMessageStore();
+      return messageStore.unreadMessages;
+    },
   },
   methods: {
     obtenerNombreMesString(fecha) {
       const meses = [
-        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+        "enero",
+        "febrero",
+        "marzo",
+        "abril",
+        "mayo",
+        "junio",
+        "julio",
+        "agosto",
+        "septiembre",
+        "octubre",
+        "noviembre",
+        "diciembre",
       ];
 
       const fechaObj = new Date(fecha);
@@ -182,8 +236,8 @@ export default {
       return meses[mes];
     },
     cObtenerNombreMes(tFecha) {
-      const opciones = { month: 'long' };
-      const nombreMes = new Intl.DateTimeFormat('es-ES', opciones).format(tFecha);
+      const opciones = { month: "long" };
+      const nombreMes = new Intl.DateTimeFormat("es-ES", opciones).format(tFecha);
       return nombreMes;
     },
     cObtenerAñoFecha(tFecha) {
@@ -195,15 +249,15 @@ export default {
       this.cFechaFinal = this.cFormatoFecha(dFecha);
     },
     cFormatoFecha(dFecha) {
-      const mes = `${dFecha.getMonth() + 1}`.padStart(2, '0'); // Añade un cero si es necesario
-      const dia = `${dFecha.getDate()}`.padStart(2, '0');
+      const mes = `${dFecha.getMonth() + 1}`.padStart(2, "0"); // Añade un cero si es necesario
+      const dia = `${dFecha.getDate()}`.padStart(2, "0");
       return `${dFecha.getFullYear()}-${mes}-${dia}`;
     },
     EditarCapacitacion() {
-      this.$router.push({ name: 'editar-capacitacion' });
+      this.$router.push({ name: "editar-capacitacion" });
     },
     cObtenerDiaSemanaAbreviado(cFecha) {
-      const cDias = ['LUN', 'MAR', 'MIER', 'JUE', 'VIE', 'SAB', 'DOM'];
+      const cDias = ["LUN", "MAR", "MIER", "JUE", "VIE", "SAB", "DOM"];
       const fechaObj = new Date(cFecha);
       const diaSemana = fechaObj.getDay();
       return cDias[diaSemana];
@@ -216,10 +270,10 @@ export default {
     },
 
     agregarPropiedadImagen(cServidor) {
-      this.aCapacitaciones = this.aCapacitaciones.map(capacitacion => {
+      this.aCapacitaciones = this.aCapacitaciones.map((capacitacion) => {
         return {
           ...capacitacion,
-          cImagen: cServidor + `/assets/images/${capacitacion.imacap}`
+          cImagen: cServidor + `/assets/images/${capacitacion.imacap}`,
         };
       });
     },
@@ -230,13 +284,14 @@ export default {
     },
 
     FiltrarCapacitaciones() {
-
-      if (this.cFechaInicial != this.cFechaInicialOriginal || this.cFechaFinal != this.cfechaFinalOriginal) {
+      if (
+        this.cFechaInicial != this.cFechaInicialOriginal ||
+        this.cFechaFinal != this.cfechaFinalOriginal
+      ) {
         this.cFechaInicialOriginal = this.cFechaInicial;
         this.cfechaFinalOriginal = this.cFechaFinal;
-        this.CargarCapacitaciones(true)
-      }
-      else {
+        this.CargarCapacitaciones(true);
+      } else {
         this.FiltroInmediato();
       }
     },
@@ -245,19 +300,21 @@ export default {
       if (!this.cTextoBuscar) {
         this.aCapacitacionesFiltradas = this.aCapacitaciones;
       } else {
-        this.aCapacitacionesFiltradas = this.aCapacitaciones.filter(capacitacion => {
+        this.aCapacitacionesFiltradas = this.aCapacitaciones.filter((capacitacion) => {
           // Dividimos el texto a buscar en palabras individuales y las convertimos a minúsculas
-          const palabrasBuscar = this.cTextoBuscar.toLowerCase().split(' ');
+          const palabrasBuscar = this.cTextoBuscar.toLowerCase().split(" ");
 
           // Verificamos si todas las palabras están en alguna de las propiedades, también en minúsculas
-          return palabrasBuscar.every(palabra =>
-            (capacitacion.concap && capacitacion.concap.toLowerCase().includes(palabra)) ||
-            (capacitacion.descorcap && capacitacion.descorcap.toLowerCase().includes(palabra)) ||
-            (capacitacion.titcap && capacitacion.titcap.toLowerCase().includes(palabra))
+          return palabrasBuscar.every(
+            (palabra) =>
+              (capacitacion.concap &&
+                capacitacion.concap.toLowerCase().includes(palabra)) ||
+              (capacitacion.descorcap &&
+                capacitacion.descorcap.toLowerCase().includes(palabra)) ||
+              (capacitacion.titcap && capacitacion.titcap.toLowerCase().includes(palabra))
           );
         });
       }
-
     },
 
     obtenerUltimoDiaDosMesesDespues(fecha) {
@@ -266,7 +323,7 @@ export default {
 
       // Asegurarse de que la fecha es válida
       if (isNaN(fechaObj.getTime())) {
-        return 'Fecha inválida';
+        return "Fecha inválida";
       }
 
       // Añadir dos meses a la fecha
@@ -281,45 +338,54 @@ export default {
       let dia = fechaObj.getDate();
 
       // Asegurarse de que el mes y el día sean de dos dígitos
-      mes = mes < 10 ? '0' + mes : mes;
-      dia = dia < 10 ? '0' + dia : dia;
+      mes = mes < 10 ? "0" + mes : mes;
+      dia = dia < 10 ? "0" + dia : dia;
 
       return `${año}-${mes}-${dia}`;
     },
 
     CargarPost(oItem) {
       const capacitacionStore = useMessageStore();
-      oItem.cCadenaFechaHora = this.obtenerNombreMesString(oItem.fecinicap) + " " +
-        this.cObtenerDiaDeFecha(oItem.fecinicap) + " @ " + oItem.horinicap + " - " +
-        this.obtenerNombreMesString(oItem.fecfincap) + " " +
-        this.cObtenerDiaDeFecha(oItem.fecfincap) + " " + oItem.horfincap
-      localStorage.setItem('capacitacionState', JSON.stringify(oItem));
+      oItem.cCadenaFechaHora =
+        this.obtenerNombreMesString(oItem.fecinicap) +
+        " " +
+        this.cObtenerDiaDeFecha(oItem.fecinicap) +
+        " @ " +
+        oItem.horinicap +
+        " - " +
+        this.obtenerNombreMesString(oItem.fecfincap) +
+        " " +
+        this.cObtenerDiaDeFecha(oItem.fecfincap) +
+        " " +
+        oItem.horfincap;
+      localStorage.setItem("capacitacionState", JSON.stringify(oItem));
       capacitacionStore.oCapacitacion = oItem;
-      this.$router.push({ name: 'detalle-capacitacion', params: {} });
+      this.$router.push({ name: "detalle-capacitacion", params: {} });
     },
 
     CargarCapacitaciones(bRealizarFiltro = false) {
       var oObjeto = this;
       var params = {
         fechaInicial: this.cFechaInicial,
-        fechaFinal: this.cFechaFinal
+        fechaFinal: this.cFechaFinal,
       };
 
-      axios.get(this.cServidor + '/capacitaciones', { params })
-        .then(response => {
+      axios
+        .get(this.cServidor + "/capacitaciones", { params })
+        .then((response) => {
           this.aCapacitaciones = response.data;
           this.cTextoBuscar = "";
           this.agregarPropiedadImagen(this.cServidor);
           this.aCapacitacionesFiltradas = this.aCapacitaciones;
+          console.log(this.aCapacitaciones);
           if (bRealizarFiltro) {
             oObjeto.FiltroInmediato();
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     },
-
   },
 
   created() {
@@ -333,20 +399,12 @@ export default {
     this.CargarCapacitaciones();
   },
 
-  computed: {
-
-  },
-  watch: {
-
-  },
-  components: {
-
-  },
-  props: {
-
-  },
+  computed: {},
+  watch: {},
+  components: {},
+  props: {},
   mounted() {
-    // código a ejecutar después de que el componente se haya montado    
+    // código a ejecutar después de que el componente se haya montado
   },
   beforeDestroy() {
     // código a ejecutar antes de que el componente sea destruido
@@ -398,6 +456,5 @@ export default {
     align-items: center;
     /* Alinea los elementos a la derecha */
   }
-
 }
 </style>

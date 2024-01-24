@@ -64,8 +64,8 @@ export default {
       cFechaFinal: "",
       contactos: [],
       headers: [
-        { title: "Capacitación", value: "titcap", align: "start", width: "400" },
-        { title: "Fecha-Hora", key: "fechorcon", align: "end", width: "200" },
+        { title: "Capacitación", value: "titcap", align: "start"},
+        { title: "Fecha-Hora", key: "fechorcon", align: "end"},
         { title: "Nombre Usuario", key: "nomcon", align: "end" },
         { title: "Apellido Usuario", key: "apecon", align: "end" },
         { title: "Teléfono", key: "telcon", align: "end" },
@@ -120,6 +120,10 @@ export default {
       const dia = `${dFecha.getDate()}`.padStart(2, "0");
       return `${dFecha.getFullYear()}-${mes}-${dia}`;
     },
+    EjecutarPrueba() {
+      // push to router
+      this.$router.push({ name: "listar-capacitaciones" });
+    },
   },
   mounted() {
     this.ApuntarHoy();
@@ -128,4 +132,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.columna-capacitacion{
+  width:300px;
+}
+</style>
