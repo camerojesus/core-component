@@ -117,11 +117,13 @@
           <span class="mr-2">Contenido largo</span>
         </v-row>
         <v-row class="mb-2">
+          <QuillEditor theme="snow" style="width: 100%; height: 400px" v-model:content="concap" />
           <v-textarea
             placeholder="Contenido del post, se mostrará en la página de la capacitación"
             rows="10"
             auto-grow
             v-model="concap"
+            v-if="false"
           ></v-textarea>
         </v-row>
         <!-- \Contenido del POST -->
@@ -169,9 +171,14 @@
 
 <script>
 import axios from "axios";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
   name: "AgregarCapacitacion",
+  components: {
+    QuillEditor,
+  },
   data() {
     return {
       cServidor: import.meta.env.VITE_API_URL,
@@ -206,7 +213,6 @@ export default {
     },
 
     bValidarCampos() {
-
       if (this.fecinicap == "") {
         this.cMensajeError = "Debes seleccionar una fecha inicial";
         this.bNotificacionError = true;
@@ -252,6 +258,7 @@ export default {
     },
 
     async GuardarCapacitacion() {
+      console.log("Comentario ampliado: ",this.concap)
       if (!this.bValidarCampos()) {
         return;
       }
@@ -346,9 +353,9 @@ export default {
       this.titcap = item.titcap;
       this.descorcap = item.descorcap;
       this.concap = item.concap;
-      this.imacap = item.imacap;      
-      localStorage.removeItem('capacitacionSeleccionada');
-    }    
+      this.imacap = item.imacap;
+      localStorage.removeItem("capacitacionSeleccionada");
+    }
   },
 };
 </script>

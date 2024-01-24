@@ -1,5 +1,4 @@
-<template class="d-flex flex-column">
-  <QuillEditor theme="snow" style="width:800px;height:400px;"/>
+<template class="d-flex flex-column">  
   <v-data-table
     :headers="headers"
     :items="capacitaciones"
@@ -51,9 +50,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 export default {
   name: "Capacitaciones",
-  components:{
-    QuillEditor
-  },  
+
   data() {
     return {
       headers: [
