@@ -240,7 +240,7 @@ export default {
       return true;
     },
 
-    GuardarCapacitacion() {
+    async GuardarCapacitacion() {
       if (!this.bValidarCampos()) {
         console.log("Campos inválidos");
         return;
@@ -255,27 +255,27 @@ export default {
         titcap: this.titcap,
         descorcap: this.descorcap,
         concap: this.concap,
+        imacap: this.imagenSeleccionada.name,
         // Agrega más propiedades según sea necesario
       };
 
       var cURL = this.cServidor + "/guardarcapacitacion";
-      axios
-        .post(cURL, capacitacionData)
-        .then((response) => {
-          console.log("Capacitación guardada con éxito:", response.data);
-          this.numcap = response.data.numcap;
+      try {
+        const response = await axios.post(cURL, capacitacionData);
+        console.log("Capacitación guardada con éxito:", response.data);
+        this.numcap = response.data.numcap;
 
-          // Subir la imagen después de guardar la capacitación
-          if (this.imagenSeleccionada) {
-            this.onFileSelected(this.imagenSeleccionada);
-          }
+        if (this.imagenSeleccionada) {
+          await this.uploadImage(this.imagenSeleccionada, this.numcap);
+        }
 
-          this.cMensaje = "Capacitación guardada con éxito";
-          this.bNotificacion = true;
-        })
-        .catch((error) => {
-          // manejo de errores
-        });
+        this.cMensaje = "Capacitación guardada con éxito";
+        this.bNotificacion = true;
+      } catch (error) {
+        console.error("Error al guardar la capacitación:", error);
+        this.cMensajeError = "Error al guardar la capacitación. Inténtalo de nuevo.";
+        this.bNotificacionError = true;
+      }
     },
 
     previewImage(event) {
@@ -283,31 +283,35 @@ export default {
       if (file) {
         this.imagenSeleccionada = file; // Almacenar la imagen seleccionada
         this.imacap = URL.createObjectURL(file);
+        console.log("Imagen seleccionada:", this.imacap);
+        console.log("Nombre de archivo file.name:", file.name);
       }
     },
 
     onFileSelected(cArchivo) {
       const file = cArchivo;
       if (file) {
-        this.uploadImage(file, this.numcap); // Pasar el numcap como segundo argumento
+        this.uploadImage(file, this.imagenSeleccionada.name); // Pasar el numcap como segundo argumento
       }
     },
 
-    async uploadImage(file, numcap) {
+    async uploadImage(file) {
       try {
         const formData = new FormData();
-        formData.append("image", file, numcap + "." + file.name.split(".").pop()); // Usar numcap como nombre de archivo
+        formData.append("image", file, file.name); // Usando solo file.name para el nombre del archivo
 
-        var cURL= this.cServidor + "/upload";
-
+        var cURL = this.cServidor + "/upload";
         const response = await axios.post(cURL, formData, {
-          // configuración de axios
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
 
-        this.imacap = response.data.imacap; // Actualizar la URL de la imagen
+        // Asegúrate de que el servidor devuelva la URL correcta de la imagen
+        this.imacap = response.data.imageUrl; // Actualiza con la URL de la imagen
         console.log("Imagen subida:", this.imacap);
       } catch (error) {
-        // manejo de errores
+        console.error("Error al subir la imagen:", error);
       }
     },
   },
