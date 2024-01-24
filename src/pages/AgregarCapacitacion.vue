@@ -117,7 +117,12 @@
           <span class="mr-2">Contenido largo</span>
         </v-row>
         <v-row class="mb-2">
-          <QuillEditor theme="snow" style="width: 100%; height: 400px" v-model:content="concap" />
+          <QuillEditor
+            theme="snow"
+            style="width: 100%; height: 400px"
+            v-model:content="concap"
+            contentType="html"
+          />
           <v-textarea
             placeholder="Contenido del post, se mostrará en la página de la capacitación"
             rows="10"
@@ -258,11 +263,11 @@ export default {
     },
 
     async GuardarCapacitacion() {
-      console.log("Comentario ampliado: ",this.concap)
+      console.clear();
+      console.log(this.concap);
       if (!this.bValidarCampos()) {
         return;
       }
-
       const capacitacionData = {
         numcap: this.numcap, // El número de la capacitación se asigna automáticamente en la API cuando este campo está vacio
         fecinicap: this.fecinicap,

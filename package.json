@@ -15,7 +15,7 @@
     "@tiptap/pm": "^2.1.16",
     "@tiptap/starter-kit": "^2.1.16",
     "@tiptap/vue-3": "^2.1.16",
-    "@vueup/vue-quill": "^1.0.0-beta.11",
+    "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.6.5",
     "core-js": "^3.34.0",
     "current-script-polyfill": "^1.0.0",
