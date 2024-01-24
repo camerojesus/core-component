@@ -219,7 +219,7 @@ export default {
       this.aCapacitaciones = this.aCapacitaciones.map(capacitacion => {
         return {
           ...capacitacion,
-          cImagen: cServidor + `/assets/images/${capacitacion.numcap}.jpg`
+          cImagen: cServidor + `/assets/images/${capacitacion.imacap}`
         };
       });
     },
