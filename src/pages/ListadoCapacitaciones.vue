@@ -1,4 +1,4 @@
-<template class="d-flex flex-column">  
+<template class="d-flex flex-column">
   <v-data-table
     :headers="headers"
     :items="capacitaciones"
@@ -7,46 +7,35 @@
   >
     <template v-slot:item.action="{ item }">
       <v-layout align-center justify-start>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ attrs, on }">
-            <v-btn
-              icon
-              small
-              color="primary"
-              v-bind="attrs"
-              v-on="on"
-              @click="editarCapacitacion(item)"
-            >
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-          </template>
-          <span>Editar Capacitaciones</span>
-        </v-tooltip>
+        <!-- Botón Editar Capacitación -->
+        <v-btn
+          icon
+          small
+          color="primary"
+          @click="editarCapacitacion(item)"
+        >
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
 
-        <v-tooltip bottom>
-          <template v-slot:activator="{ attrs, on }">
-            <v-btn
-              icon
-              small
-              color="red"
-              v-bind="attrs"
-              v-on="on"
-              @click="eliminarCapacitacion(item)"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </template>
-          <span>Eliminar Capacitaciones</span>
-        </v-tooltip>
+        <!-- Botón Eliminar Capacitación -->
+        <v-btn
+          icon
+          small
+          color="red"
+          @click="eliminarCapacitacion(item)"
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
       </v-layout>
     </template>
   </v-data-table>
 </template>
 
+
 <script>
 import axios from "axios";
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
   name: "Capacitaciones",

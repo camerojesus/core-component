@@ -7,7 +7,7 @@
         @click="CargarListaCapacitaciones"
         elevation="4"
       >
-        Listar capacitaciones / Modificar / Eliminar
+        Listar
       </v-btn>
     </v-row>
 
@@ -187,7 +187,7 @@ export default {
   data() {
     return {
       cServidor: import.meta.env.VITE_API_URL,
-      imacap: "", // Para almacenar la URL de la imagen para la vista previa
+      imacap: "",                   // Para almacenar la URL de la imagen para la vista previa
       fecinicap: "",
       fecfincap: "",
       horinicap: "",
@@ -199,8 +199,9 @@ export default {
       cMensajeError: "",
       bNotificacion: false,
       cMensaje: "",
-      bNuevo: true, // Para indicar si se está creando una nueva capacitación o editando una existente
-      imagenSeleccionada: null, // Almacenar la referencia a la imagen seleccionada
+      bNueva: true,                 // Para indicar si se está creando una nueva capacitación o editando una existente
+      imagenSeleccionada: null,     // Almacenar la referencia a la imagen seleccionada
+      cImagenOriginal: "", 
     };
   },
   methods: {
@@ -263,11 +264,14 @@ export default {
     },
 
     async GuardarCapacitacion() {
-      console.clear();
-      console.log(this.concap);
       if (!this.bValidarCampos()) {
         return;
       }
+      var cImagenJson=''
+      if (this.imagenSeleccionada && this.imagenSeleccionada.name) {
+        cImagenJson = this.imagenSeleccionada.name;        
+      }
+      else cImagenJson = this.cImagenOriginal;
       const capacitacionData = {
         numcap: this.numcap, // El número de la capacitación se asigna automáticamente en la API cuando este campo está vacio
         fecinicap: this.fecinicap,
@@ -277,15 +281,15 @@ export default {
         titcap: this.titcap,
         descorcap: this.descorcap,
         concap: this.concap,
-        imacap: this.imagenSeleccionada.name,
+        imacap: cImagenJson,
         // Agrega más propiedades según sea necesario
       };
 
       var cURL = this.cServidor + "/guardarcapacitacion";
       try {
         const response = await axios.post(cURL, capacitacionData);
-        console.log("Capacitación guardada con éxito:", response.data);
         this.numcap = response.data.numcap;
+        this.bNueva = false;
 
         if (this.imagenSeleccionada) {
           await this.uploadImage(this.imagenSeleccionada, this.numcap);
@@ -294,7 +298,6 @@ export default {
         this.cMensaje = "Capacitación guardada con éxito";
         this.bNotificacion = true;
       } catch (error) {
-        console.error("Error al guardar la capacitación:", error);
         this.cMensajeError = "Error al guardar la capacitación. Inténtalo de nuevo.";
         this.bNotificacionError = true;
       }
@@ -305,8 +308,6 @@ export default {
       if (file) {
         this.imagenSeleccionada = file; // Almacenar la imagen seleccionada
         this.imacap = URL.createObjectURL(file);
-        console.log("Imagen seleccionada:", this.imacap);
-        console.log("Nombre de archivo file.name:", file.name);
       }
     },
 
@@ -335,9 +336,7 @@ export default {
 
         // Asegúrate de que el servidor devuelva la URL correcta de la imagen
         this.imacap = response.data.imageUrl; // Actualiza con la URL de la imagen
-        console.log("Imagen subida:", this.imacap);
       } catch (error) {
-        console.error("Error al subir la imagen:", error);
       }
     },
   },
@@ -358,7 +357,9 @@ export default {
       this.titcap = item.titcap;
       this.descorcap = item.descorcap;
       this.concap = item.concap;
-      this.imacap = item.imacap;
+      this.cImagenOriginal = item.imacap;
+      this.imacap = `${this.cServidor}/assets/images/${item.imacap}`;
+      this.bNueva = false;
       localStorage.removeItem("capacitacionSeleccionada");
     }
   },
