@@ -11,9 +11,9 @@
             prepend-icon="mdi-magnify"
             v-model="cTextoBuscar"
             variant="outlined"
-            @change="FiltrarCapacitaciones()"
-            @keydown.esc="LimpiarFiltrar()"
-            @click:clear="LimpiarFiltrar()"
+            @change="FiltrarCapacitaciones"
+            @keydown.esc="LimpiarFiltrar"
+            @click:clear="LimpiarFiltrar"
           />
         </v-col>
         <v-col cols="3" class="borde d-flex align-center col justify-center">
@@ -46,9 +46,9 @@
           prepend-icon="mdi-magnify"
           v-model="cTextoBuscar"
           variant="outlined"
-          @change="FiltrarCapacitaciones()"
-          @keydown.esc="LimpiarFiltrar()"
-          @click:clear="LimpiarFiltrar()"
+          @change="FiltrarCapacitaciones"
+          @keydown.esc="LimpiarFiltrar"
+          @click:clear="LimpiarFiltrar"
         />
       </v-row>
     </v-container>
@@ -191,7 +191,7 @@ export default {
       cFechaInicial: "",
       cFechaFinal: "",
       cFechaInicialOriginal: "",
-      cfechaFinalOriginal: "",
+      cFechaFinalOriginal: "",
       aCapacitaciones: [],
       aCapacitacionesFiltradas: [],
       oItem: {},
@@ -200,6 +200,7 @@ export default {
       nWidth: 0,
       nHeight: 0,
       cPaginaPresentar: "Capacitaciones",
+      oGescel: useMessageStore(),
     };
   },
   computed: {
@@ -286,14 +287,45 @@ export default {
     FiltrarCapacitaciones() {
       if (
         this.cFechaInicial != this.cFechaInicialOriginal ||
-        this.cFechaFinal != this.cfechaFinalOriginal
+        this.cFechaFinal != this.cFechaFinalOriginal
       ) {
         this.cFechaInicialOriginal = this.cFechaInicial;
-        this.cfechaFinalOriginal = this.cFechaFinal;
+        this.cFechaFinalOriginal = this.cFechaFinal;
         this.CargarCapacitaciones(true);
       } else {
         this.FiltroInmediato();
       }
+    },
+
+    LimpiarEstado() {
+      this.oGescel.oCapacitacionesFiltradas = [];
+      this.oGescel.oCapacitaciones= [];
+      this.oGescel.cFechaInicial = "";
+      this.oGescel.cFechaFinal = "";
+      this.oGescel.cFechaInicialOriginal = "";
+      this.oGescel.cFechaFinalOriginal = "";
+      this.oGescel.cTextoBuscar = "";
+    },
+
+    GuardarEstado() {
+      this.oGescel.oCapacitacionesFiltradas = this.aCapacitacionesFiltradas;
+      this.oGescel.oCapacitaciones = this.aCapacitaciones;
+      this.oGescel.cFechaInicial = this.cFechaInicial;
+      this.oGescel.cFechaFinal = this.cFechaFinal;
+      this.oGescel.cFechaInicialOriginal = this.cFechaInicialOriginal;
+      this.oGescel.cFechaFinalOriginal = this.cFechaFinalOriginal;
+      this.oGescel.cTextoBuscar = this.cTextoBuscar;
+    },
+
+    CargarEstado() {
+      this.aCapacitacionesFiltradas = this.oGescel.oCapacitacionesFiltradas;
+      this.aCapacitaciones = this.oGescel.oCapacitaciones;
+      this.cFechaInicial = this.oGescel.cFechaInicial;
+      this.cFechaFinal = this.oGescel.cFechaFinal;
+      this.cFechaInicialOriginal = this.oGescel.cFechaInicialOriginal;
+      this.cFechaFinalOriginal = this.oGescel.cFechaFinalOriginal;
+      this.cTextoBuscar = this.oGescel.cTextoBuscar;
+
     },
 
     FiltroInmediato() {
@@ -315,6 +347,7 @@ export default {
           );
         });
       }
+      this.GuardarEstado();
     },
 
     obtenerUltimoDiaDosMesesDespues(fecha) {
@@ -345,7 +378,6 @@ export default {
     },
 
     CargarPost(oItem) {
-      const capacitacionStore = useMessageStore();
       oItem.cCadenaFechaHora =
         this.obtenerNombreMesString(oItem.fecinicap) +
         " " +
@@ -359,7 +391,7 @@ export default {
         " " +
         oItem.horfincap;
       localStorage.setItem("capacitacionState", JSON.stringify(oItem));
-      capacitacionStore.oCapacitacion = oItem;
+      this.GuardarEstado();
       this.$router.push({ name: "detalle-capacitacion", params: {} });
     },
 
@@ -377,9 +409,11 @@ export default {
           this.cTextoBuscar = "";
           this.agregarPropiedadImagen(this.cServidor);
           this.aCapacitacionesFiltradas = this.aCapacitaciones;
-          console.log(this.aCapacitaciones);
           if (bRealizarFiltro) {
             oObjeto.FiltroInmediato();
+          }
+          else{
+            oObjeto.GuardarEstado();
           }
         })
         .catch((error) => {
@@ -391,21 +425,25 @@ export default {
   created() {
     this.nWidth = screen.width;
     this.nHeight = screen.height;
-    var dFecha = new Date();
-    this.cMes = this.cObtenerNombreMes(dFecha);
-    this.cAño = this.cObtenerAñoFecha(dFecha);
-    this.cFechaInicial = this.cFormatoFecha(dFecha);
-    this.cFechaFinal = this.obtenerUltimoDiaDosMesesDespues(this.cFechaInicial);
-    this.CargarCapacitaciones();
+    if (this.oGescel.oCapacitaciones && this.oGescel.oCapacitaciones.length > 0) {
+      // Hay capacitaciones guardadas, cargarlas desde oGescel.oCapacitaciones
+      this.CargarEstado();
+      this.LimpiarEstado();
+    } else {
+      var dFecha = new Date();
+      this.cMes = this.cObtenerNombreMes(dFecha);
+      this.cAño = this.cObtenerAñoFecha(dFecha);
+      this.cFechaInicial = this.cFormatoFecha(dFecha);
+      this.cFechaFinal = this.obtenerUltimoDiaDosMesesDespues(this.cFechaInicial);
+      this.CargarCapacitaciones();
+    }
   },
 
   computed: {},
   watch: {},
   components: {},
   props: {},
-  mounted() {
-    // código a ejecutar después de que el componente se haya montado
-  },
+  mounted() {},
   beforeDestroy() {
     // código a ejecutar antes de que el componente sea destruido
   },

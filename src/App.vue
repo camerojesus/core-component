@@ -21,9 +21,7 @@
         </v-btn-toggle>
       </v-container>
       <v-container class="d-flex justify-center contenedor">
-        <keep-alive>
           <router-view />
-        </keep-alive>
       </v-container>
     </v-main>
   </v-app>

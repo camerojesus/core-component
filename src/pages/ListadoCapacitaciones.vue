@@ -69,8 +69,6 @@ export default {
     },
     editarCapacitacion(item) {
       // Implementar lógica para editar capacitación
-      console.clear();
-      console.log("Editando ESTA capacitacion", item);
       localStorage.setItem("capacitacionSeleccionada", JSON.stringify(item));
       // push del router para ejecutar el page agregar-capacitacion
       this.$router.push({ name: "agregar-capacitacion" });
