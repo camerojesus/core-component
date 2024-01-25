@@ -1,6 +1,6 @@
 # Documentación del Componente Vue.js con Vuetify
 
-Este código corresponde a un componente Vue.js utilizando Vuetify, diseñado para manejar la creación y edición de capacitaciones. Integra Axios para realizar peticiones HTTP y Quill para la edición de texto enriquecido.
+Diseño para manejar la creación y edición de capacitaciones. Integra Axios para realizar peticiones HTTP y Quill para la edición de texto enriquecido.
 
 ## Estructura del Componente
 

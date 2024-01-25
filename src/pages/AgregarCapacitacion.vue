@@ -310,13 +310,6 @@ export default {
       }
     },
 
-    onFileSelected(cArchivo) {
-      const file = cArchivo;
-      if (file) {
-        this.uploadImage(file, this.imagenSeleccionada.name); // Pasar el numcap como segundo argumento
-      }
-    },
-
     CargarListaCapacitaciones() {
       this.$router.push({ name: "listar-capacitaciones" });
     },
