@@ -187,7 +187,7 @@ export default {
   data() {
     return {
       cServidor: import.meta.env.VITE_API_URL,
-      imacap: "",                   // Para almacenar la URL de la imagen para la vista previa
+      imacap: "", // Para almacenar la URL de la imagen para la vista previa
       fecinicap: "",
       fecfincap: "",
       horinicap: "",
@@ -199,22 +199,22 @@ export default {
       cMensajeError: "",
       bNotificacion: false,
       cMensaje: "",
-      bNueva: true,                 // Para indicar si se está creando una nueva capacitación o editando una existente
-      imagenSeleccionada: null,     // Almacenar la referencia a la imagen seleccionada
-      cImagenOriginal: "", 
+      bNueva: true, // Para indicar si se está creando una nueva capacitación o editando una existente
+      imagenSeleccionada: null, // Almacenar la referencia a la imagen seleccionada
+      cImagenOriginal: "",
     };
   },
   methods: {
+
     llenarValoresDePrueba() {
       // Asignar valores de prueba a cada propiedad
-      this.fecinicap = "2024-01-01"; // Fecha inicial de prueba
-      this.horinicap = "08:00"; // Hora inicial de prueba
-      this.fecfincap = "2024-01-02"; // Fecha final de prueba
-      this.horfincap = "17:00"; // Hora final de prueba
-      this.titcap = "Capacitación de Prueba"; // Título de la capacitación de prueba
-      this.descorcap = "Descripción corta de la capacitación de prueba"; // Descripción corta de prueba
-      this.concap = "Contenido detallado de la capacitación de prueba."; // Contenido de la capacitación de prueba
-
+      this.fecinicap = "2024-01-01";                                        // Fecha inicial de prueba
+      this.horinicap = "08:00";                                             // Hora inicial de prueba
+      this.fecfincap = "2024-01-02";                                        // Fecha final de prueba
+      this.horfincap = "17:00";                                             // Hora final de prueba
+      this.titcap = "Capacitación de Prueba";                               // Título de la capacitación de prueba
+      this.descorcap = "Descripción corta de la capacitación de prueba";    // Descripción corta de prueba
+      this.concap = "Contenido detallado de la capacitación de prueba.";    // Contenido de la capacitación de prueba
       // Puedes agregar más campos si es necesario
     },
 
@@ -267,11 +267,10 @@ export default {
       if (!this.bValidarCampos()) {
         return;
       }
-      var cImagenJson=''
+      var cImagenJson = "";
       if (this.imagenSeleccionada && this.imagenSeleccionada.name) {
-        cImagenJson = this.imagenSeleccionada.name;        
-      }
-      else cImagenJson = this.cImagenOriginal;
+        cImagenJson = this.imagenSeleccionada.name;
+      } else cImagenJson = this.cImagenOriginal;
       const capacitacionData = {
         numcap: this.numcap, // El número de la capacitación se asigna automáticamente en la API cuando este campo está vacio
         fecinicap: this.fecinicap,
@@ -336,8 +335,7 @@ export default {
 
         // Asegúrate de que el servidor devuelva la URL correcta de la imagen
         this.imacap = response.data.imageUrl; // Actualiza con la URL de la imagen
-      } catch (error) {
-      }
+      } catch (error) {}
     },
   },
 
