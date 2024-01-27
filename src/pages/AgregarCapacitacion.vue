@@ -73,8 +73,11 @@
 
         <!-- Selector de Cursos relacionados -->
         <v-row>
-            <span class="mr-2">Cursos relacionados</span>
-            <Prueba></Prueba>
+          <span class="mr-2">Cursos relacionados</span>
+          <Prueba
+            @datos-enviados="manejarDatosRecibidos"
+            :aCursosPrevios="aCursosPrevios"
+          ></Prueba>
         </v-row>
         <!-- \Selector de Cursos relacionados-->
 
@@ -206,6 +209,9 @@ export default {
       concap: "",
       bNotificacionError: false,
       cMensajeError: "",
+      aCursos: [],
+      aCursosFiltrados: [],
+      aCursosPrevios: [],
       bNotificacion: false,
       cMensaje: "",
       bNueva: true, // Para indicar si se está creando una nueva capacitación o editando una existente
@@ -214,16 +220,15 @@ export default {
     };
   },
   methods: {
-
     llenarValoresDePrueba() {
       // Asignar valores de prueba a cada propiedad
-      this.fecinicap = "2024-01-01";                                        // Fecha inicial de prueba
-      this.horinicap = "08:00";                                             // Hora inicial de prueba
-      this.fecfincap = "2024-01-02";                                        // Fecha final de prueba
-      this.horfincap = "17:00";                                             // Hora final de prueba
-      this.titcap = "Capacitación de Prueba";                               // Título de la capacitación de prueba
-      this.descorcap = "Descripción corta de la capacitación de prueba";    // Descripción corta de prueba
-      this.concap = "Contenido detallado de la capacitación de prueba.";    // Contenido de la capacitación de prueba
+      this.fecinicap = "2024-01-01"; // Fecha inicial de prueba
+      this.horinicap = "08:00"; // Hora inicial de prueba
+      this.fecfincap = "2024-01-02"; // Fecha final de prueba
+      this.horfincap = "17:00"; // Hora final de prueba
+      this.titcap = "Capacitación de Prueba"; // Título de la capacitación de prueba
+      this.descorcap = "Descripción corta de la capacitación de prueba"; // Descripción corta de prueba
+      this.concap = "Contenido detallado de la capacitación de prueba."; // Contenido de la capacitación de prueba
       // Puedes agregar más campos si es necesario
     },
 
@@ -303,11 +308,35 @@ export default {
           await this.uploadImage(this.imagenSeleccionada, this.numcap);
         }
 
+        await this.guardarCursosCapacitacion();
+
         this.cMensaje = "Capacitación guardada con éxito";
         this.bNotificacion = true;
       } catch (error) {
         this.cMensajeError = "Error al guardar la capacitación. Inténtalo de nuevo.";
         this.bNotificacionError = true;
+      }
+    },
+
+    async guardarCursosCapacitacion() {
+      const cursosParaEnviar = this.aCursosFiltrados
+        .map((nomcurFiltrado) => {
+          const curso = this.aCursos.find((curso) => curso.nomcur === nomcurFiltrado);
+          return { numcur: curso ? curso.numcur : null, nomcur: nomcurFiltrado };
+        })
+        .filter((curso) => curso.numcur != null);
+
+      try {
+        const cURL = this.cServidor + "/guardarcursocapacitacion";
+        const response = await axios.post(cURL, {
+          cNumeroCapacitacion: this.numcap,
+          cursos: cursosParaEnviar,
+        });
+
+        // Aquí puedes manejar la respuesta del servidor
+      } catch (error) {
+        console.error("Error al guardar los cursos:", error);
+        // Manejo de errores
       }
     },
 
@@ -321,6 +350,11 @@ export default {
 
     CargarListaCapacitaciones() {
       this.$router.push({ name: "listar-capacitaciones" });
+    },
+
+    manejarDatosRecibidos(array1, array2) {
+      this.aCursos = array1;
+      this.aCursosFiltrados = array2;
     },
 
     async uploadImage(file) {
@@ -339,30 +373,53 @@ export default {
         this.imacap = response.data.imageUrl; // Actualiza con la URL de la imagen
       } catch (error) {}
     },
-  },
 
-  // Métodos adicionales - cuando se necesiten
-  mounted() {
-    this.bNotificacion = false;
-    this.bNotificacionError = false;
-    const itemJson = localStorage.getItem("capacitacionSeleccionada");
-    if (itemJson) {
-      const item = JSON.parse(itemJson);
-      // Ahora puedes usar el objeto 'item' como necesites
-      this.numcap = item.numcap;
-      this.fecinicap = item.fecinicap;
-      this.fecfincap = item.fecfincap;
-      this.horinicap = item.horinicap;
-      this.horfincap = item.horfincap;
-      this.titcap = item.titcap;
-      this.descorcap = item.descorcap;
-      this.concap = item.concap;
-      this.cImagenOriginal = item.imacap;
-      this.imacap = `${this.cServidor}/assets/images/${item.imacap}`;
-      this.bNueva = false;
-      localStorage.removeItem("capacitacionSeleccionada");
-    }
+    obtenerCursosCapacitacion(cNumeroCapacitacion) {
+      var cURL = this.cServidor + "/obtenerCursosCapacitacion";
+
+      // Realizar la llamada a la API usando Axios
+      axios
+        .get(cURL, { params: { cNumeroCapacitacion: cNumeroCapacitacion } })
+        .then((response) => {
+          // Manejar la respuesta de la API
+          this.aCursosPrevios = response.data;
+        })
+        .catch((error) => {
+          // Manejar el error en la solicitud
+          console.error("Error al obtener los datos:", error);
+        });
+    },
   },
+  // Métodos adicionales - cuando se necesiten
+  created: async function() {
+  this.bNotificacion = false;
+  this.bNotificacionError = false;
+  const itemJson = localStorage.getItem("capacitacionSeleccionada");
+  if (itemJson) {
+    const item = JSON.parse(itemJson);
+    // Ahora puedes usar el objeto 'item' como necesites
+    this.numcap = item.numcap;
+    this.fecinicap = item.fecinicap;
+    this.fecfincap = item.fecfincap;
+    this.horinicap = item.horinicap;
+    this.horfincap = item.horfincap;
+    this.titcap = item.titcap;
+    this.descorcap = item.descorcap;
+    this.concap = item.concap;
+    this.cImagenOriginal = item.imacap;
+    this.imacap = `${this.cServidor}/assets/images/${item.imacap}`;
+    this.bNueva = false;
+    localStorage.removeItem("capacitacionSeleccionada");
+  }
+
+  // Llamar a obtenerCursosCapacitacion y esperar a que termine
+  try {
+    await this.obtenerCursosCapacitacion(this.numcap);
+    // Ahora, aCursosPrevios está disponible con los datos de la API
+  } catch (error) {
+    console.error("Error al obtener cursos:", error);
+  }
+},
 };
 </script>
 
