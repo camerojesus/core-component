@@ -71,6 +71,13 @@
         </v-row>
         <!-- \Selectores de fecha-hora -->
 
+        <!-- Selector de Cursos relacionados -->
+        <v-row>
+            <span class="mr-2">Cursos relacionados</span>
+            <Prueba></Prueba>
+        </v-row>
+        <!-- \Selector de Cursos relacionados-->
+
         <!-- Selección y vista previa de la imagen destacada-->
         <v-row>
           <v-file-input
@@ -178,11 +185,13 @@
 import axios from "axios";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import Prueba from "../components/Prueba.vue";
 
 export default {
   name: "AgregarCapacitacion",
   components: {
     QuillEditor,
+    Prueba,
   },
   data() {
     return {

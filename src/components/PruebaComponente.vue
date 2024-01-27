@@ -1,181 +1,44 @@
 <template>
-  <v-container>
-    <!-- Contenedor para el buscador - Escritorio -->
-    <v-container class="d-none d-lg-flex justify-center contenedor-buscador">
-      <v-row class="fill-height">
-        <v-col cols="7" class="borde d-flex align-center pt-0 pb-0">
-          <v-text-field
-            style="margin-top: 10px"
-            clearable
-            label="Palabras a buscar en capacitaciones"
-            prepend-icon="mdi-magnify"
-            v-model="cTextoBuscar"
-            variant="outlined"
-            @change="FiltrarCapacitaciones"
-            @keydown.esc="LimpiarFiltrar"
-            @click:clear="LimpiarFiltrar"
-          />
-        </v-col>
-        <v-col cols="3" class="borde d-flex align-center col justify-center">
-          <v-btn
-            color="rgb(91,110,225)"
-            style="text-transform: none; font-size: 12px"
-            @click="FiltrarCapacitaciones()"
-          >
-            Buscar Capacitaciones
-          </v-btn>
-        </v-col>
-        <v-col cols="2" class="borde d-flex align-center col justify-center">
-          <v-btn-toggle v-model="cTipoBusqueda" rounded="5" color="grey lighten-8" group>
-            <v-btn value="Lista" style="text-transform: none"> Lista </v-btn>
+  <!-- Renderizamos los card's de las capacitaciones -->
+  <v-container class="mt-2 d-flex justify-center flex-column">
+    <div v-for="(oItem, index) in aCapacitacionesFiltradas" :key="index">
+      <v-card class="pb-3 pt-3">
+        <v-row class="pa-0">
+          <v-col class="d-flex flex-column custom-align-left">
+            <p>{{ cObtenerDiaSemanaAbreviado(oItem.fecinicap) }}</p>
+            <h3>{{ cObtenerDiaDeFecha(oItem.fecinicap) }}</h3>
+          </v-col>
+        </v-row>
 
-            <v-btn value="Día" style="text-transform: none"> Día </v-btn>
-          </v-btn-toggle>
-        </v-col>
-      </v-row>
-    </v-container>
-    <!-- \Contenedor para el buscador - Escritorio -->
-
-    <!-- Contenedor para el buscador - Móvil/Tableta (Visible en xs, sm y md) -->
-    <v-container class="d-flex flex-column d-lg-none justify-center my-6">
-      <v-row class="d-flex">
-        <v-text-field
-          style="margin-top: 10px"
-          clearable
-          label="Palabras a buscar en capacitaciones"
-          prepend-icon="mdi-magnify"
-          v-model="cTextoBuscar"
-          variant="outlined"
-          @change="FiltrarCapacitaciones"
-          @keydown.esc="LimpiarFiltrar"
-          @click:clear="LimpiarFiltrar"
-        />
-      </v-row>
-    </v-container>
-    <!-- \Contenedor para el buscador - Móvil -->
-
-    <!-- Contenedor para seleccionar Fecha - Escritorio -->
-    <v-container class="d-none d-lg-flex justify-center contenedor-buscador">
-      <v-row>
-        <v-col cols="2">
-          <v-btn class="mt-4" style="margin-right: 40px" @click="ApuntarHoy()">
-            Hoy
-          </v-btn>
-        </v-col>
-        <v-col cols="10" class="borde d-flex align-center">
-          <span style="margin-right: 10px">Desde: </span>
-          <input
-            type="date"
-            id="fechaInicial"
-            name="fecha"
-            v-model="cFechaInicial"
-            style="width: 120px"
-          />
-          <span style="margin-right: 10px; margin-left: 20px">Hasta: </span>
-          <input
-            type="date"
-            id="fechaFinal"
-            name="fecha"
-            v-model="cFechaFinal"
-            style="width: 120px"
-          />
-        </v-col>
-      </v-row>
-    </v-container>
-    <!-- \Contenedor para seleccionar Fecha - Escritorio -->
-
-    <!-- Contenedor para fechas - Movil o tabletas (Visible en xs, sm y md) -->
-    <v-container
-      class="d-flex flex-column d-lg-none justify-center contenedor-buscador mb-8"
-    >
-      <v-row class="justify-center fill-height my-2">
-        <!-- my-10 es un ejemplo, ajusta el valor según tus necesidades -->
-        <v-btn @click="ApuntarHoy()"> Hoy </v-btn>
-      </v-row>
-      <v-row class="justify-start my-2">
-        <span>Desde: </span>
-        <input
-          type="date"
-          id="fechaInicial"
-          name="fecha"
-          v-model="cFechaInicial"
-          style="width: 120px"
-        />
-      </v-row>
-      <v-row class="justify-start my-2">
-        <span>Hasta: </span>
-        <input
-          type="date"
-          id="fechaFinal"
-          name="fecha"
-          v-model="cFechaFinal"
-          style="width: 120px"
-        />
-      </v-row>
-      <v-row class="justify-center my-2">
-        <v-btn
-          color="rgb(91,110,225)"
-          style="text-transform: none; font-size: 12px"
-          @click="FiltrarCapacitaciones()"
-        >
-          Buscar Capacitaciones
-        </v-btn>
-      </v-row>
-    </v-container>
-    <!-- \Contenedor para fechas - Movil o tabletas -->
-
-    <!-- Separador con indicador de fecha-->
-    <v-container class="mt-4 d-flex justify-center contenedor-buscador" my-2>
-      <v-row class="borde mt-0">
-        <v-col cols="2" xs="6" sm="6" class="borde"> {{ cMes }} {{ cAño }} </v-col>
-        <v-col cols="10" xs="6" sm="6" class="borde d-flex align-center mt-0">
-          <v-divider></v-divider>
-        </v-col>
-      </v-row>
-    </v-container>
-    <!-- \Separador con indicador de fecha-->
-
-    <!-- Renderizamos los card's de las capacitaciones -->
-    <v-container class="mt-2 d-flex justify-center flex-column">
-      <div v-for="(oItem, index) in aCapacitacionesFiltradas" :key="index">
-        <v-card class="pb-3 pt-3">
-          <v-row class="pa-0">
-            <v-col class="d-flex flex-column custom-align-left">
-              <p>{{ cObtenerDiaSemanaAbreviado(oItem.fecinicap) }}</p>
-              <h3>{{ cObtenerDiaDeFecha(oItem.fecinicap) }}</h3>
-            </v-col>
-          </v-row>
-
-          <v-card-subtitle class="pt-2">
-            {{ obtenerNombreMesString(oItem.fecinicap) }}
-            {{ cObtenerDiaDeFecha(oItem.fecinicap) }} @ {{ oItem.horinicap }} -
-            {{ obtenerNombreMesString(oItem.fecfincap) }}
-            {{ cObtenerDiaDeFecha(oItem.fecfincap) }} @ {{ oItem.horfincap }}
-            {{ oItem.fecinicap }} {{ oItem.feccincap }}
-          </v-card-subtitle>
-          <v-row>
-            <!-- Columna para el contenido textual -->
-            <v-col cols="12" sm="7" md="7">
-              <v-card-title
-                class="card-title-wrap hover-underline"
-                @click="CargarPost(oItem)"
-              >
-                {{ oItem.titcap }}
-              </v-card-title>
-              <v-card-text>
-                {{ oItem.descorcap }}
-              </v-card-text>
-            </v-col>
-            <!-- Columna para la imagen -->
-            <v-col cols="12" sm="5" md="5">
-              <v-img :src="oItem.cImagen" style="width: 100%; height: auto"></v-img>
-            </v-col>
-          </v-row>
-        </v-card>
-      </div>
-    </v-container>
-    <!-- \Renderizamos los card's de las capacitaciones -->
+        <v-card-subtitle class="pt-2">
+          {{ obtenerNombreMesString(oItem.fecinicap) }}
+          {{ cObtenerDiaDeFecha(oItem.fecinicap) }} @ {{ oItem.horinicap }} -
+          {{ obtenerNombreMesString(oItem.fecfincap) }}
+          {{ cObtenerDiaDeFecha(oItem.fecfincap) }} @ {{ oItem.horfincap }}
+          {{ oItem.fecinicap }} {{ oItem.feccincap }}
+        </v-card-subtitle>
+        <v-row>
+          <!-- Columna para el contenido textual -->
+          <v-col cols="12" sm="7" md="7">
+            <v-card-title
+              class="card-title-wrap hover-underline"
+              @click="CargarPost(oItem)"
+            >
+              {{ oItem.titcap }} {{ oItem.numcap }}
+            </v-card-title>
+            <v-card-text>
+              {{ oItem.descorcap }}
+            </v-card-text>
+          </v-col>
+          <!-- Columna para la imagen -->
+          <v-col cols="12" sm="5" md="5">
+            <v-img :src="oItem.cImagen" style="width: 100%; height: auto"></v-img>
+          </v-col>
+        </v-row>
+      </v-card>
+    </div>
   </v-container>
+  <!-- \Renderizamos los card's de las capacitaciones -->
 </template>
 
 <script>
@@ -234,11 +97,13 @@ export default {
         "noviembre",
         "diciembre",
       ];
-      const fechaUTC = new Date(fecha + "T00:00:00Z");
-      const mes = fechaUTC.getUTCMonth();
+
+      const fechaObj = new Date(fecha);
+      console.log("fecha generada", fechaObj);
+      const mes = fechaObj.getMonth();
+
       return meses[mes];
     },
-
     cObtenerNombreMes(tFecha) {
       const opciones = { month: "long" };
       const nombreMes = new Intl.DateTimeFormat("es-ES", opciones).format(tFecha);
@@ -260,19 +125,17 @@ export default {
     EditarCapacitacion() {
       this.$router.push({ name: "editar-capacitacion" });
     },
-
-    // Método corregido: cObtenerDiaSemanaAbreviado
     cObtenerDiaSemanaAbreviado(cFecha) {
-      const cDias = ["DOM", "LUN", "MAR", "MIER", "JUE", "VIE", "SAB"]; // Ajustado el orden para UTC
-      const fechaUTC = new Date(cFecha + "T00:00:00Z");
-      const diaSemana = fechaUTC.getUTCDay();
+      const cDias = ["LUN", "MAR", "MIER", "JUE", "VIE", "SAB", "DOM"];
+      const fechaObj = new Date(cFecha);
+      const diaSemana = fechaObj.getDay();
       return cDias[diaSemana];
     },
 
     cObtenerDiaDeFecha(cFecha) {
-      const fechaUTC = new Date(cFecha + "T00:00:00Z"); // Asegurar que la fecha se interprete como UTC
-      const dia = fechaUTC.getUTCDate(); // Obtener el día en UTC
-      return dia.toString(); // Retornar el día como string
+      const fechaUTC = new Date(cFecha + "T00:00:00Z");   // Asegurar que la fecha se interprete como UTC
+      const dia = fechaUTC.getUTCDate();                  // Obtener el día en UTC
+      return dia.toString();                              // Retornar el día como string
     },
 
     agregarPropiedadImagen(cServidor) {
@@ -355,17 +218,29 @@ export default {
     },
 
     obtenerUltimoDiaDosMesesDespues(fecha) {
-      let fechaObj = new Date(fecha + "T00:00:00Z");
+      // Convertir el string de fecha en un objeto Date
+      let fechaObj = new Date(fecha);
+
+      // Asegurarse de que la fecha es válida
       if (isNaN(fechaObj.getTime())) {
         return "Fecha inválida";
       }
-      fechaObj.setUTCMonth(fechaObj.getUTCMonth() + 2); // Añadir dos meses
-      fechaObj.setUTCDate(0); // Último día del mes anterior (mes + 2 - 1)
-      let año = fechaObj.getUTCFullYear();
-      let mes = fechaObj.getUTCMonth() + 1;
-      let dia = fechaObj.getUTCDate();
+
+      // Añadir dos meses a la fecha
+      fechaObj.setMonth(fechaObj.getMonth() + 2);
+
+      // Establecer la fecha al primer día del mes siguiente y restar un día
+      fechaObj.setMonth(fechaObj.getMonth() + 1, 0);
+
+      // Formatear la fecha de vuelta a yyyy-mm-dd
+      let año = fechaObj.getFullYear();
+      let mes = fechaObj.getMonth() + 1; // getMonth() devuelve un índice basado en 0
+      let dia = fechaObj.getDate();
+
+      // Asegurarse de que el mes y el día sean de dos dígitos
       mes = mes < 10 ? "0" + mes : mes;
       dia = dia < 10 ? "0" + dia : dia;
+
       return `${año}-${mes}-${dia}`;
     },
 

@@ -1,6 +1,17 @@
 <template>
   <v-app>
+    <v-app-bar app fixed v-if="false">
+      <v-toolbar-title style="margin-left: 200px">Mi Aplicación</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-layout style="margin-right:300px;">
+        <v-btn text>Link Uno</v-btn>
+        <v-btn text>Link Dos</v-btn>
+        <v-btn text>Link Tres</v-btn>
+      </v-layout>
+    </v-app-bar>
     <v-main>
+     <PruebaComponente v-if="false">
+     </PruebaComponente>
       <v-container style="width: 70%" class="d-flex flex-column justify-start mt-4">
         <v-btn-toggle
           v-model="cPaginaPresentar"
@@ -21,13 +32,14 @@
         </v-btn-toggle>
       </v-container>
       <v-container class="d-flex justify-center contenedor">
-          <router-view />
+        <router-view />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import PruebaComponente from "./components/PruebaComponente.vue";
 export default {
   name: "Principal", // Nombre del componente
 
@@ -90,7 +102,7 @@ export default {
 
   // Componentes hijos (opcional)
   components: {
-    // Definición de componentes hijos
+    PruebaComponente,
   },
 };
 </script>

@@ -8,29 +8,18 @@
     <template v-slot:item.action="{ item }">
       <v-layout align-center justify-start>
         <!-- Botón Editar Capacitación -->
-        <v-btn
-          icon
-          small
-          color="primary"
-          @click="editarCapacitacion(item)"
-        >
+        <v-btn icon small color="primary" @click="editarCapacitacion(item)">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
 
         <!-- Botón Eliminar Capacitación -->
-        <v-btn
-          icon
-          small
-          color="red"
-          @click="eliminarCapacitacion(item)"
-        >
+        <v-btn icon small color="red" @click="eliminarCapacitacion(item)">
           <v-icon>mdi-delete</v-icon>
         </v-btn>
       </v-layout>
     </template>
   </v-data-table>
 </template>
-
 
 <script>
 import axios from "axios";
