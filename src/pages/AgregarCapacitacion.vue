@@ -189,6 +189,7 @@ import axios from "axios";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import Prueba from "../components/Prueba.vue";
+import { sanitizeText } from "../services/gescel.js";
 
 export default {
   name: "AgregarCapacitacion",
@@ -281,6 +282,7 @@ export default {
       if (!this.bValidarCampos()) {
         return;
       }
+      // this.sanitizeVariables();
       var cImagenJson = "";
       if (this.imagenSeleccionada && this.imagenSeleccionada.name) {
         cImagenJson = this.imagenSeleccionada.name;
@@ -389,37 +391,53 @@ export default {
           console.error("Error al obtener los datos:", error);
         });
     },
+
+    sanitizeCourseNames(aCursosSanitizar) {
+      // Itera sobre los elementos de aCursosFiltrados y sanitiza la propiedad "nomcur" de cada elemento
+      console.log("cursos actuales: ",aCursosSanitizar)
+      this.aCursosSanitizar.forEach((curso) => {
+        curso.nomcur = sanitizeText(curso.nomcur);
+      });
+    },    
+
+    sanitizeVariables() {
+      // Itera sobre las variables y aplica oGescel.sanitizeText a cada una
+      this.titcap = sanitizeText(this.titcap);
+      this.descorcap = sanitizeText(this.descorcap);
+      this.concap = sanitizeText(this.concap);
+      // this.sanitizeCourseNames();   //  Sanitiza los nombres de los cursos
+    },
   },
   // Métodos adicionales - cuando se necesiten
-  created: async function() {
-  this.bNotificacion = false;
-  this.bNotificacionError = false;
-  const itemJson = localStorage.getItem("capacitacionSeleccionada");
-  if (itemJson) {
-    const item = JSON.parse(itemJson);
-    // Ahora puedes usar el objeto 'item' como necesites
-    this.numcap = item.numcap;
-    this.fecinicap = item.fecinicap;
-    this.fecfincap = item.fecfincap;
-    this.horinicap = item.horinicap;
-    this.horfincap = item.horfincap;
-    this.titcap = item.titcap;
-    this.descorcap = item.descorcap;
-    this.concap = item.concap;
-    this.cImagenOriginal = item.imacap;
-    this.imacap = `${this.cServidor}/assets/images/${item.imacap}`;
-    this.bNueva = false;
-    localStorage.removeItem("capacitacionSeleccionada");
-  }
+  created: async function () {
+    this.bNotificacion = false;
+    this.bNotificacionError = false;
+    const itemJson = localStorage.getItem("capacitacionSeleccionada");
+    if (itemJson) {
+      const item = JSON.parse(itemJson);
+      // Ahora puedes usar el objeto 'item' como necesites
+      this.numcap = item.numcap;
+      this.fecinicap = item.fecinicap;
+      this.fecfincap = item.fecfincap;
+      this.horinicap = item.horinicap;
+      this.horfincap = item.horfincap;
+      this.titcap = item.titcap;
+      this.descorcap = item.descorcap;
+      this.concap = item.concap;
+      this.cImagenOriginal = item.imacap;
+      this.imacap = `${this.cServidor}/assets/images/${item.imacap}`;
+      this.bNueva = false;
+      localStorage.removeItem("capacitacionSeleccionada");
+    }
 
-  // Llamar a obtenerCursosCapacitacion y esperar a que termine
-  try {
-    await this.obtenerCursosCapacitacion(this.numcap);
-    // Ahora, aCursosPrevios está disponible con los datos de la API
-  } catch (error) {
-    console.error("Error al obtener cursos:", error);
-  }
-},
+    // Llamar a obtenerCursosCapacitacion y esperar a que termine
+    try {
+      await this.obtenerCursosCapacitacion(this.numcap);
+      // Ahora, aCursosPrevios está disponible con los datos de la API
+    } catch (error) {
+      console.error("Error al obtener cursos:", error);
+    }
+  },
 };
 </script>
 
