@@ -382,7 +382,6 @@ export default {
         this.cObtenerDiaDeFecha(oItem.fecfincap) +
         " " +
         oItem.horfincap;
-      console.log(oItem.cCadenaFechaHora);
       localStorage.setItem("capacitacionState", JSON.stringify(oItem));
       this.GuardarEstado();
       this.$router.push({ name: "detalle-capacitacion", params: {} });

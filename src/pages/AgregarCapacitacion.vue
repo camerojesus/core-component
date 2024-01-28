@@ -189,7 +189,7 @@ import axios from "axios";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import Prueba from "../components/Prueba.vue";
-import { sanitizeText } from "../services/gescel.js";
+import oGescel from "../services/gescel.js";
 
 export default {
   name: "AgregarCapacitacion",
@@ -282,7 +282,6 @@ export default {
       if (!this.bValidarCampos()) {
         return;
       }
-      // this.sanitizeVariables();
       var cImagenJson = "";
       if (this.imagenSeleccionada && this.imagenSeleccionada.name) {
         cImagenJson = this.imagenSeleccionada.name;
@@ -390,22 +389,6 @@ export default {
           // Manejar el error en la solicitud
           console.error("Error al obtener los datos:", error);
         });
-    },
-
-    sanitizeCourseNames(aCursosSanitizar) {
-      // Itera sobre los elementos de aCursosFiltrados y sanitiza la propiedad "nomcur" de cada elemento
-      console.log("cursos actuales: ",aCursosSanitizar)
-      this.aCursosSanitizar.forEach((curso) => {
-        curso.nomcur = sanitizeText(curso.nomcur);
-      });
-    },    
-
-    sanitizeVariables() {
-      // Itera sobre las variables y aplica oGescel.sanitizeText a cada una
-      this.titcap = sanitizeText(this.titcap);
-      this.descorcap = sanitizeText(this.descorcap);
-      this.concap = sanitizeText(this.concap);
-      // this.sanitizeCourseNames();   //  Sanitiza los nombres de los cursos
     },
   },
   // Métodos adicionales - cuando se necesiten
