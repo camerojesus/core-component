@@ -19,15 +19,28 @@
       </v-layout>
     </template>
   </v-data-table>
+  <g-dialog v-if="bDialogoEliminar"
+    :cTitulo="cTituloDialogo"
+    :cMensaje="cTextoDialogo"
+    :cBotonAceptar="cBotonAceptar"
+    :cBotonCancelar="cBotonCancelar"  
+    :oCapacitacion="oItemEliminar"
+    @cerrarDialogo="MetodoCerrarDialogo">
+  </g-dialog>
 </template>
 
 <script>
 import axios from "axios";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import gDialogo from "../components/G-dialog.vue";
+import oGescel from "../services/gescel";
 
 export default {
   name: "Capacitaciones",
+  components: {
+    gDialogo: "g-dialog",
+  },
 
   data() {
     return {
@@ -41,6 +54,12 @@ export default {
       ],
       capacitaciones: [],
       cServidor: import.meta.env.VITE_API_URL,
+      bDialogoEliminar: false,
+      cTituloDialogo: "Eliminar Capacitación",
+      cTextoDialogo: "¿Está seguro que desea eliminar la capacitación?",
+      cBotonAceptar: "Aceptar",
+      cBotonCancelar: "Cancelar",      
+      oItemEliminar: {},
     };
   },
   mounted() {
@@ -65,7 +84,33 @@ export default {
     eliminarCapacitacion(item) {
       // Implementar lógica para eliminar capacitación
       console.log("Eliminar:", item);
+      this.oItemEliminar = item;
+      this.bDialogoEliminar = true;
     },
+    MetodoCerrarDialogo(bSeleccionUsuario,oCapacitacion) {
+      this.bDialogoEliminar = false;
+      console.log("Eliminar:", this.oItemEliminar);
+      console.log("el usuario dijo : ", bSeleccionUsuario);
+      if (bSeleccionUsuario) {
+        // Implementar lógica para eliminar capacitación
+          this.eliminarCapacitacionServidor(oCapacitacion.numcap)
+      }
+    },
+    async eliminarCapacitacionServidor(cNumeroCapacitacion) {
+      try {
+        const cUrl = oGescel.cServidor + "/eliminarcapacitacion";
+        const response = await axios.delete(cUrl, {
+          params: {
+            cNumeroCapacitacion: cNumeroCapacitacion
+          }
+        });
+        console.log('Respuesta del servidor:', response.data);
+        this.obtenerCapacitaciones();
+      } catch (error) {
+        console.error('Error al eliminar la capacitación:', error);
+        // Manejar el error según tus necesidades
+      }
+    }    
   },
 };
 </script>

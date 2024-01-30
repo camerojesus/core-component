@@ -10,7 +10,7 @@
       </v-layout>
     </v-app-bar>
     <v-main>
-     <PruebaComponente v-if="false">
+     <PruebaComponente v-if="true">
      </PruebaComponente>
       <v-container style="width: 70%" class="d-flex flex-column justify-start mt-4">
         <v-btn-toggle

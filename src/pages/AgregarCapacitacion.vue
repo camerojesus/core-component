@@ -393,6 +393,7 @@ export default {
   },
   // Métodos adicionales - cuando se necesiten
   created: async function () {
+    oGescel.funcionConsole("prueba");
     this.bNotificacion = false;
     this.bNotificacionError = false;
     const itemJson = localStorage.getItem("capacitacionSeleccionada");
