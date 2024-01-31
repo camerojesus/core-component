@@ -13,32 +13,27 @@ const routes = [
     component: Home
   },
   {
-    path: '/core-component/editar-capacitacion',
+    path: '/editar-capacitacion',
     name: 'editar-capacitacion',
     component: EditarCapacitacion
   },
   {
-    path: '/core-component',
-    name: 'core-component',
-    component: Home
-  },  
-  {
-    path: '/core-component/agregar-capacitacion',
+    path: '/agregar-capacitacion',
     name: 'agregar-capacitacion',
     component: AgregarCapacitacion
   },    
   {
-    path: '/core-component/listar-capacitaciones',
+    path: '/listar-capacitaciones',
     name: 'listar-capacitaciones',
     component: ListarCapacitaciones
   },      
   {
-    path: '/core-component/detalle-capacitacion',
+    path: '/detalle-capacitacion',
     name: 'detalle-capacitacion',
     component: DetalleCapacitacion
   },
   {
-    path: '/core-component/listar-contactos',
+    path: '/listar-contactos',
     name: 'listar-contactos',
     component: ListarContactos
   },  

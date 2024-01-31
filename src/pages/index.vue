@@ -354,19 +354,20 @@ export default {
       this.GuardarEstado();
     },
 
-    obtenerUltimoDiaDosMesesDespues(fecha) {
+    obtenerUltimoDiaMesesDespues(fecha,nMeses=4) {
       let fechaObj = new Date(fecha + "T00:00:00Z");
       if (isNaN(fechaObj.getTime())) {
         return "Fecha inválida";
       }
-      fechaObj.setUTCMonth(fechaObj.getUTCMonth() + 2); // Añadir dos meses
+      fechaObj.setUTCMonth(fechaObj.getUTCMonth() + nMeses); // Añadir dos meses
       fechaObj.setUTCDate(0); // Último día del mes anterior (mes + 2 - 1)
       let año = fechaObj.getUTCFullYear();
       let mes = fechaObj.getUTCMonth() + 1;
       let dia = fechaObj.getUTCDate();
       mes = mes < 10 ? "0" + mes : mes;
       dia = dia < 10 ? "0" + dia : dia;
-      return `${año}-${mes}-${dia}`;
+      console.log(`${año}-${mes}-${dia}`)
+      return `${año}-${mes}-${dia}`;      
     },
 
     CargarPost(oItem) {
@@ -425,7 +426,7 @@ export default {
       this.cMes = this.cObtenerNombreMes(dFecha);
       this.cAño = this.cObtenerAñoFecha(dFecha);
       this.cFechaInicial = this.cFormatoFecha(dFecha);
-      this.cFechaFinal = this.obtenerUltimoDiaDosMesesDespues(this.cFechaInicial);
+      this.cFechaFinal = this.obtenerUltimoDiaMesesDespues(this.cFechaInicial,4);
       this.CargarCapacitaciones();
     }
   },
