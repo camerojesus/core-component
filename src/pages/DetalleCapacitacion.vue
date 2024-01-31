@@ -32,6 +32,7 @@
 <script>
 import { useMessageStore } from '../stores/store.js'
 import ContactoCliente from "../components/ContactoCliente.vue";
+import oGescel from "../services/gescel.js";
 
 export default {
   name: "DetalleCapacitacion",
@@ -55,7 +56,7 @@ export default {
         }
       }
   },
-  mounted() {
+async  mounted() {
     const storedState = localStorage.getItem('capacitacionState');    
     if (storedState) {
         this.oCapacitacion = JSON.parse(storedState);
@@ -63,8 +64,10 @@ export default {
         // Manejar el caso en que no hay datos en localStorage
         // Por ejemplo, cargar datos desde una API o redirigir
       }    
-    if(this.oCapacitacion.acacap!='')   {
-      this.aListaCapacitaciones = this.oCapacitacion.acacap.split(',').map(palabra => palabra.trim());      
+
+    if(this.oCapacitacion.numcap!='')   {
+      this.aListaCapacitaciones = await oGescel.obtenerCursosCapacitacion(this.oCapacitacion.numcap)
+      this.aListaCapacitaciones = this.aListaCapacitaciones.map(item => item.nomcur);
       this.bTieneAcademias = true;
     }
 

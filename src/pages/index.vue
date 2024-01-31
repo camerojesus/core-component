@@ -366,7 +366,6 @@ export default {
       let dia = fechaObj.getUTCDate();
       mes = mes < 10 ? "0" + mes : mes;
       dia = dia < 10 ? "0" + dia : dia;
-      console.log(`${año}-${mes}-${dia}`)
       return `${año}-${mes}-${dia}`;      
     },
 

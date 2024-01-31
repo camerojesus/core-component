@@ -1,5 +1,7 @@
 // src/utils/Gescel.js
 
+import axios from 'axios';
+
 export function cObtenerNombreArchivo(rutaCompleta) {
     const partes = rutaCompleta.split('/');
     const nombreArchivo = partes[partes.length - 1];
@@ -31,7 +33,22 @@ const oGescel = {
     cServidor: import.meta.env.VITE_API_URL,
     sanitizeText,
     saludar,
-    sumar
+    sumar,
+    obtenerCursosCapacitacion
 };
+
+async function obtenerCursosCapacitacion(cNumeroCapacitacion) {
+  const cURL = `${oGescel.cServidor}/obtenerCursosCapacitacion`; // Usar oGescel.cServidor
+
+  try {
+    const response = await axios.get(cURL, { params: { cNumeroCapacitacion } });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+    throw error;
+  }
+}
+
+oGescel.obtenerCursosCapacitacion = obtenerCursosCapacitacion;
 
 export default oGescel;
