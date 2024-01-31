@@ -47,6 +47,10 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    // Siempre desplazar a la parte superior cuando se navega a una nueva ruta
+    return { top: 0 };
+  }  
 });
 
 export default router;

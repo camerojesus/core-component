@@ -49,6 +49,6 @@ async function obtenerCursosCapacitacion(cNumeroCapacitacion) {
   }
 }
 
-oGescel.obtenerCursosCapacitacion = obtenerCursosCapacitacion;
+//oGescel.obtenerCursosCapacitacion = obtenerCursosCapacitacion;
 
 export default oGescel;
