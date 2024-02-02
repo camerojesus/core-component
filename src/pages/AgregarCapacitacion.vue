@@ -320,6 +320,7 @@ export default {
     },
 
     async guardarCursosCapacitacion() {
+      
       const cursosParaEnviar = this.aCursosFiltrados
         .map((nomcurFiltrado) => {
           const curso = this.aCursos.find((curso) => curso.nomcur === nomcurFiltrado);
@@ -355,7 +356,7 @@ export default {
 
     manejarDatosRecibidos(array1, array2) {
       this.aCursos = array1;
-      this.aCursosFiltrados = array2;
+      this.aCursosFiltrados = array2;      
     },
 
     async uploadImage(file) {
@@ -393,7 +394,6 @@ export default {
   },
   // Métodos adicionales - cuando se necesiten
   created: async function () {
-    oGescel.funcionConsole("prueba");
     this.bNotificacion = false;
     this.bNotificacionError = false;
     const itemJson = localStorage.getItem("capacitacionSeleccionada");

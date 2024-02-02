@@ -26,7 +26,7 @@
           </v-btn>
         </v-col>
         <v-col cols="2" class="borde d-flex align-center col justify-center">
-          <v-btn-toggle v-model="cTipoBusqueda" rounded="5" color="grey lighten-8" group>
+          <v-btn-toggle v-model="cTipoBusqueda" rounded="5" color="grey lighten-8" group v-if="false">
             <v-btn value="Lista" style="text-transform: none"> Lista </v-btn>
 
             <v-btn value="Día" style="text-transform: none"> Día </v-btn>

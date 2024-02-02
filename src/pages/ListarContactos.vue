@@ -1,55 +1,87 @@
 <template>
-  <v-container class="d-flex flex-column justify-center align-center">
-    <v-row>
-      <h3 style="color: rgb(21, 92, 190)">Listado de Contactos</h3>
-    </v-row>
-    <v-row>
-      <!-- Contenedor para seleccionar Fecha - Escritorio -->
-      <v-col cols="2">
-        <v-btn class="mt-4" style="margin-right: 40px" @click="ApuntarHoy()"> Hoy </v-btn>
-      </v-col>
-      <v-col cols="6" class="borde d-flex align-center">
-        <span style="margin-right: 10px">Desde: </span>
+  <v-container class="justify-center">
+    <!-- Contenedor buscador fechas - celular -->
+    <v-container class="contenedor-filtro-fechas-movil mb-4">
+      <v-row class="justify-center fill-height my-2">
+        <!-- my-10 es un ejemplo, ajusta el valor según tus necesidades -->
+        <v-btn @click="ApuntarHoy()"> Hoy </v-btn>
+      </v-row>
+      <v-row class="justify-start my-2">
+        <span>Desde: </span>
         <input
           type="date"
           id="fechaInicial"
           name="fecha"
           v-model="cFechaInicial"
-          style="width: 130px"
+          style="width: 120px"
         />
-        <span style="margin-right: 10px; margin-left: 20px">Hasta: </span>
+      </v-row>
+      <v-row class="justify-start my-2">
+        <span>Hasta: </span>
         <input
           type="date"
           id="fechaFinal"
           name="fecha"
           v-model="cFechaFinal"
-          style="width: 130px"
+          style="width: 120px"
         />
-      </v-col>
-      <v-col cols="4">
-        <v-btn
-          class="mt-4"
-          style="margin-left: 40px; text-transform: none; font-size: 12px"
-          color="rgb(91,110,225)"
-          @click="cargarContactos(cFechaInicial, cFechaFinal)"
-        >
-          Cargar Resultados
-        </v-btn>
-      </v-col>
-      <!-- \Contenedor para seleccionar Fecha - Escritorio -->
+      </v-row>
+    </v-container>
+    <!-- \Contenedor buscador fechas - celular -->
+
+    <!-- Contenedor para filtro de fechas - Escritorio -->
+    <v-row class="contenedor-filtro-fechas-desktop mb-4 mt-4">
+      <v-btn class="mr-4" style="margin-right: 40px" @click="ApuntarHoy()"> Hoy </v-btn>
+      <span style="margin-right: 10px">Desde: </span>
+      <input
+        type="date"
+        id="fechaInicial"
+        name="fecha"
+        v-model="cFechaInicial"
+        style="width: 130px"
+        class="mr-4"
+      />
+      <span style="margin-right: 10px; margin-left: 20px">Hasta: </span>
+      <input
+        type="date"
+        id="fechaFinal"
+        name="fecha"
+        v-model="cFechaFinal"
+        style="width: 130px"
+        class="mr-4"
+      />
     </v-row>
+    <!-- \Contenedor para filtro de fechas - Escritorio -->
+
+    <!-- Boton para cargar los resultados -->
+    <v-row class="d-flex justify-center align-center mt-4 mb-4">
+      <v-btn
+        style="text-transform: none; font-size: 12px; max-width: 190px"
+        color="rgb(91,110,225)"
+        width="60%"
+        @click="cargarContactos(cFechaInicial, cFechaFinal)"
+      >
+        Cargar Resultados
+      </v-btn>
+    </v-row>
+    <!-- Boton para cargar los resultados -->
+
+    <!-- datatable con los resultados -->
     <v-data-table
       :headers="headers"
       dense
       :items="contactos"
       :items-per-page="20"
-      class="elevation-4 mt-6"
+      class="elevation-4 mt-6 mb-8"
       color="blue-grey"
       height="800"
       density="compact"
+
     >
     </v-data-table>
+    <!-- \datatable con los resultados -->
   </v-container>
+
 </template>
 
 <script>
@@ -64,8 +96,8 @@ export default {
       cFechaFinal: "",
       contactos: [],
       headers: [
-        { title: "Capacitación", value: "titcap", align: "start"},
-        { title: "Fecha-Hora", key: "fechorcon", align: "end"},
+        { title: "Capacitación", value: "titcap", align: "start" },
+        { title: "Fecha-Hora", key: "fechorcon", align: "end" },
         { title: "Nombre Usuario", key: "nomcon", align: "end" },
         { title: "Apellido Usuario", key: "apecon", align: "end" },
         { title: "Teléfono", key: "telcon", align: "end" },
@@ -133,7 +165,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.columna-capacitacion{
-  width:300px;
+.contenedor-filtro-fechas-movil {
+  display: none;
+}
+.contenedor-filtro-fechas-desktop {
+  display: none;
+}
+@media (max-width: 700px) {
+  .contenedor-filtro-fechas-movil {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 701px) {
+  .contenedor-filtro-fechas-desktop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>

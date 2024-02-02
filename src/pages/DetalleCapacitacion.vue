@@ -11,9 +11,12 @@
     <!-- Agregar información de la academia en forma de CHIP -->
     <v-row class="d-flex mt-2 mb-2" >
         <div v-for="(palabra, index) in aListaCapacitaciones" :key="index">
+        <span class="texto-ajustable">{{ palabra  }}</span>
+        <!--
         <v-chip color="primary" class="mr-2">
           {{ palabra }}
         </v-chip>
+        -->
     </div>    
     <!-- \Agregar información de la academia en forma de CHIP -->
     </v-row>    
@@ -82,5 +85,16 @@ async  mounted() {
   display:flex;
   justify-content:center;
   align-items:center;  
+}
+.texto-ajustable {
+  display: inline-block; /* Hace que el span se comporte como un bloque, pero en línea */
+  max-width: 330px; /* Establece un ancho máximo para permitir el ajuste */
+  word-wrap: break-word; /* Asegura que las palabras largas se rompan y ajusten */
+  background-color:hsl(221, 100%, 84%); /* Color de fondo */
+  margin-bottom:4px;
+  box-sizing: border-box;
+  border-radius:5px;
+  margin-right:6px;
+  padding: 5px; /* Añade algo de espacio alrededor del texto dentro del span */
 }
 </style>
