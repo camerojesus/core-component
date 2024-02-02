@@ -12,11 +12,6 @@
     <v-row class="d-flex mt-2 mb-2" >
         <div v-for="(palabra, index) in aListaCapacitaciones" :key="index">
         <span class="texto-ajustable">{{ palabra  }}</span>
-        <!--
-        <v-chip color="primary" class="mr-2">
-          {{ palabra }}
-        </v-chip>
-        -->
     </div>    
     <!-- \Agregar información de la academia en forma de CHIP -->
     </v-row>    
