@@ -19,14 +19,20 @@
         <v-col cols="3" class="borde d-flex align-center col justify-center">
           <v-btn
             color="rgb(91,110,225)"
-            style="text-transform: none; font-size: 12px"
+            style="text-transform: none"
             @click="FiltrarCapacitaciones()"
           >
             Buscar Capacitaciones
           </v-btn>
         </v-col>
         <v-col cols="2" class="borde d-flex align-center col justify-center">
-          <v-btn-toggle v-model="cTipoBusqueda" rounded="5" color="grey lighten-8" group v-if="false">
+          <v-btn-toggle
+            v-model="cTipoBusqueda"
+            rounded="5"
+            color="grey lighten-8"
+            group
+            v-if="false"
+          >
             <v-btn value="Lista" style="text-transform: none"> Lista </v-btn>
 
             <v-btn value="Día" style="text-transform: none"> Día </v-btn>
@@ -115,7 +121,7 @@
       <v-row class="justify-center my-2">
         <v-btn
           color="rgb(91,110,225)"
-          style="text-transform: none; font-size: 12px"
+          style="text-transform: none"
           @click="FiltrarCapacitaciones()"
         >
           Buscar Capacitaciones
@@ -176,6 +182,17 @@
     </v-container>
     <!-- \Renderizamos los card's de las capacitaciones -->
   </v-container>
+  <!-- Notificaciones al usuario -->
+  <v-snackbar
+    v-model="bMostrarNotificacion"
+    :timeout="nTimeout"
+    :color="cColorNotificacion"
+    elevation="24"
+    @input="bMostrarNotificacion = false"
+  >
+    <span style="color: black">{{ cMensajeNotificacion }}</span>
+  </v-snackbar>
+  <!-- \Notificaciones al usuario -->
 </template>
 
 <script>
@@ -205,6 +222,11 @@ export default {
       nHeight: 0,
       cPaginaPresentar: "Capacitaciones",
       oGescel: useMessageStore(),
+      bMostrarNotificacion: false,
+      cMensajeNotificacion: "",
+      cColorNotificacion: "",
+      nTimeout: 2000,
+      bPrimeravez: true,
     };
   },
   computed: {
@@ -354,7 +376,7 @@ export default {
       this.GuardarEstado();
     },
 
-    obtenerUltimoDiaMesesDespues(fecha,nMeses=4) {
+    obtenerUltimoDiaMesesDespues(fecha, nMeses = 4) {
       let fechaObj = new Date(fecha + "T00:00:00Z");
       if (isNaN(fechaObj.getTime())) {
         return "Fecha inválida";
@@ -366,7 +388,7 @@ export default {
       let dia = fechaObj.getUTCDate();
       mes = mes < 10 ? "0" + mes : mes;
       dia = dia < 10 ? "0" + dia : dia;
-      return `${año}-${mes}-${dia}`;      
+      return `${año}-${mes}-${dia}`;
     },
 
     CargarPost(oItem) {
@@ -406,6 +428,16 @@ export default {
           } else {
             oObjeto.GuardarEstado();
           }
+          if(this.aCapacitaciones.length > 0){
+            this.cMensajeNotificacion = "Búsqueda realizada";
+            this.cColorNotificacion = "#3cc252";
+          } else {
+            this.cMensajeNotificacion = "No se encontraron capacitaciones";
+            this.cColorNotificacion = "#d957b0";
+          }
+          if(this.bPrimeravez){
+            this.bPrimeravez = false;
+          } else this.bMostrarNotificacion = true;          
         })
         .catch((error) => {
           console.error(error);
@@ -425,7 +457,7 @@ export default {
       this.cMes = this.cObtenerNombreMes(dFecha);
       this.cAño = this.cObtenerAñoFecha(dFecha);
       this.cFechaInicial = this.cFormatoFecha(dFecha);
-      this.cFechaFinal = this.obtenerUltimoDiaMesesDespues(this.cFechaInicial,4);
+      this.cFechaFinal = this.obtenerUltimoDiaMesesDespues(this.cFechaInicial, 4);
       this.CargarCapacitaciones();
     }
   },

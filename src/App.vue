@@ -1,6 +1,13 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app location="start" elevation="4" style="margin-top:64px;" temporary>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      location="start"
+      elevation="4"
+      style="margin-top: 64px"
+      temporary
+    >
       <!-- Contenido del menú -->
       <v-list>
         <v-list-item @click="MostrarPagina('Capacitaciones')">
@@ -13,18 +20,25 @@
           <v-list-item-title>Gestionar Capacitaciones</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>  
+    </v-navigation-drawer>
 
     <v-app-bar app color="primary">
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title>Event-Component</v-toolbar-title>
-      <!-- Botón para dispositivos móviles -->      
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-app-bar>    
+      <!-- Botón para dispositivos móviles -->
+    </v-app-bar>
 
     <v-main>
-     <PruebaComponente v-if="false"></PruebaComponente>   <!-- Componente solo para fines de pruebas -->
+      <PruebaComponente v-if="false"></PruebaComponente>
+      <!-- Componente solo para fines de pruebas -->
 
-      <v-container style="width: 70%" class="d-flex flex-column justify-start mt-4" v-if="false">
+      <v-container
+        style="width: 70%"
+        class="d-flex flex-column justify-start mt-4"
+        v-if="false"
+      >
         <v-btn-toggle
           v-model="cPaginaPresentar"
           rounded="5"
@@ -75,8 +89,8 @@ export default {
 
   created() {
     this.nWidth = window.innerWidth;
-    if(this.nWidth<400){
-      this.bMostrarAppBAR=true;
+    if (this.nWidth < 400) {
+      this.bMostrarAppBAR = true;
     }
   },
 
@@ -87,15 +101,15 @@ export default {
       switch (cValorMenu) {
         case "Capacitaciones":
           this.$router.push({ name: "home" });
-          this.drawer=false;
+          this.drawer = false;
           break;
         case "ListarContactos":
           this.$router.push({ name: "listar-contactos" });
-          this.drawer=false;
+          this.drawer = false;
           break;
         case "AgregarCapacitaciones":
           this.$router.push({ name: "agregar-capacitacion" }); // Asume que existe una ruta con este nombre
-          this.drawer=false;
+          this.drawer = false;
           break;
         default:
           // Opcional: Manejar un caso por defecto si ninguna opción coincide
@@ -103,7 +117,6 @@ export default {
           break;
       }
     },
-
   },
 
   // Propiedades computadas

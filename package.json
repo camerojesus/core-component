@@ -27,7 +27,8 @@
     "tiptap-editor": "^2.0.0",
     "vue": "^3.4.15",
     "vue-quill-editor": "^3.0.6",
-    "vuetify": "^3.5.1"
+    "vuetify": "^3.5.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/quill": "^2.0.14",
